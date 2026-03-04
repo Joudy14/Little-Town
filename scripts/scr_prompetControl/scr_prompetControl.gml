@@ -20,6 +20,7 @@ with (obj_player) {
 switch _toReset {
 // Reset npcPrompt
 case 0: npcPrompt = noone; break;
+case 1: itemPrompt = noone; break;
 }
 }
 }

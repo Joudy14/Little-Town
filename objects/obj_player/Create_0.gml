@@ -15,6 +15,16 @@ hasGreeted = false;
 
 npcPrompt = noone;
 
+hasItem = noone;
+hasItemX = x;
+hasItemY = y;
+nearbyItem = noone;
+itemPrompt = noone;
+carryLimit = 0;
+
+myState = playerState.idle;
+
+
 // Create listener and set orientation
 audio_listener_set_position(0,x,y,0);
 audio_listener_set_orientation(0,0,1,0,0,0,1);
