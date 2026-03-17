@@ -1,11 +1,12 @@
 {
   "$GMObject":"",
-  "%Name":"obj_item01",
+  "%Name":"obj_item06",
   "eventList":[],
   "managed":true,
-  "name":"obj_item01",
+  "name":"obj_item06",
   "overriddenProperties":[
-    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemName","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"“Rolling Pin”",},
+    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemName","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"Water”",},
+    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemWeight","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"2.1",},
   ],
   "parent":{
     "name":"obj",
@@ -33,8 +34,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_item01",
-    "path":"sprites/spr_item01/spr_item01.yy",
+    "name":"spr_item06",
+    "path":"sprites/spr_item06/spr_item06.yy",
   },
   "spriteMaskId":{
     "name":"Sprite81",

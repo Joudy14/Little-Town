@@ -1,11 +1,12 @@
 {
   "$GMObject":"",
-  "%Name":"obj_item01",
+  "%Name":"obj_item04",
   "eventList":[],
   "managed":true,
-  "name":"obj_item01",
+  "name":"obj_item04",
   "overriddenProperties":[
-    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemName","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"“Rolling Pin”",},
+    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemName","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"“Weigher”",},
+    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemWeight","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"1.8",},
   ],
   "parent":{
     "name":"obj",
@@ -33,8 +34,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_item01",
-    "path":"sprites/spr_item01/spr_item01.yy",
+    "name":"spr_item04",
+    "path":"sprites/spr_item04/spr_item04.yy",
   },
   "spriteMaskId":{
     "name":"Sprite81",
