@@ -12,16 +12,25 @@ moveLeft = 0;
 moveDown = 0;
 }
 // Calculate movement
-vx = ((moveRight - moveLeft) * walkSpeed);
-vy = ((moveDown - moveUp) * walkSpeed);
+vx = ((moveRight - moveLeft) * (walkSpeed) * (1-carryLimit));
+vy = ((moveDown - moveUp) * (walkSpeed) * (1-carryLimit));
+
 
 
 // If Idle
 if (vx == 0 && vy == 0) {
+// If I'm not picking up or putting down an item
+if (myState != playerState.pickingUp && myState != playerState.puttingDown) {
+// If we don't have an item
+if (hasItem == noone) {
 myState = playerState.idle;
 }
-
-
+// If we're carrying an item
+else {
+myState = playerState.carryIdle;
+}
+}
+}
 // If moving
 if (vx != 0 || vy != 0) {
 if !collision_point(x+vx,y,obj_par_environment,true,true) {
@@ -44,7 +53,15 @@ if (vy < 0) {
 dir = 1;
 }
 // Set state
+// If we don't have an item
+if (hasItem == noone) {
 myState = playerState.walking;
+}
+// If we're carrying an item
+else {
+myState = playerState.carrying;
+}
+
 // Move audio listener with me
 audio_listener_set_position(0,x,y,0);
 }
@@ -79,18 +96,40 @@ show_debug_message("obj_player hasn't found anything");
 
 
 // Check for collision with Items
-nearbyItem = collision_rectangle(x-lookRange,y-lookRange,x+lookRange,y+lookRange,obj_par_item,false,false);
-if (nearbyItem) {
+nearbyItem = collision_rectangle(x - lookRange, y - lookRange, x + lookRange, y + lookRange, obj_par_item, false, true);
+if (nearbyItem && !nearbyNPC) {
 // Pop up prompt
 if (itemPrompt == noone || itemPrompt == undefined) {
 show_debug_message("obj_player has found an item!");
 itemPrompt = scr_showPrompt(nearbyItem,nearbyItem.x,nearbyItem.y-300);
 }
 }
-if (!nearbyItem) {
+if (!nearbyItem || nearbyNPC) {
 // Get rid of prompt
 scr_dismissPrompt(itemPrompt,1);
 }
+
+
+// If picking up an item
+if (myState == playerState.pickingUp) {
+if (image_index >= image_number-1) {
+myState = playerState.carrying;
+global.playerControl = true;
+}
+}
+// If putting down an item
+if (myState == playerState.puttingDown) {
+// Reset weight
+carryLimit = 0;
+// Reset my state once animation finishes
+if (image_index >= image_number-1) {
+myState = playerState.idle;
+global.playerControl = true;
+}
+}
+
+// Auto-choose Sprite based on state and direction
+sprite_index = playerSpr[myState][dir];
 
 // Depth sorting
 depth =-y;

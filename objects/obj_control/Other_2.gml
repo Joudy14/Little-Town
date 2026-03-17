@@ -10,3 +10,10 @@ carrying,
 carryIdle,
 puttingDown,
 }
+// Item states
+enum itemState {
+idle,
+taken,
+used,
+puttingBack,
+}

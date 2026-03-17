@@ -59,6 +59,7 @@
     {"id":{"name":"obj_tree01","path":"objects/obj_tree01/obj_tree01.yy",},},
     {"id":{"name":"Object20","path":"objects/Object20/Object20.yy",},},
     {"id":{"name":"rm_gameMain","path":"rooms/rm_gameMain/rm_gameMain.yy",},},
+    {"id":{"name":"scr_itemControl","path":"scripts/scr_itemControl/scr_itemControl.yy",},},
     {"id":{"name":"scr_prompetControl","path":"scripts/scr_prompetControl/scr_prompetControl.yy",},},
     {"id":{"name":"snd_fountain","path":"sounds/snd_fountain/snd_fountain.yy",},},
     {"id":{"name":"snd_gameOver","path":"sounds/snd_gameOver/snd_gameOver.yy",},},
