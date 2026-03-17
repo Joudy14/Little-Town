@@ -28,7 +28,7 @@
   ],
   "name":"spr_player_putDown_left",
   "nineSlice":null,
-  "origin":4,
+  "origin":9,
   "parent":{
     "name":"PLayer",
     "path":"folders/Sprites/PLayer.yy",
@@ -96,7 +96,7 @@
     "visibleRange":null,
     "volume":1.0,
     "xorigin":100,
-    "yorigin":164,
+    "yorigin":306,
   },
   "swatchColours":null,
   "swfPrecision":0.5,
