@@ -37,6 +37,7 @@
   },
   "name":"Littile Town",
   "resources":[
+    {"id":{"name":"AnimationCurve1","path":"animcurves/AnimationCurve1/AnimationCurve1.yy",},},
     {"id":{"name":"font_textbox","path":"fonts/font_textbox/font_textbox.yy",},},
     {"id":{"name":"obj_barre101","path":"objects/obj_barre101/obj_barre101.yy",},},
     {"id":{"name":"obj_block","path":"objects/obj_block/obj_block.yy",},},
@@ -57,6 +58,7 @@
     {"id":{"name":"obj_store01","path":"objects/obj_store01/obj_store01.yy",},},
     {"id":{"name":"obj_textbox","path":"objects/obj_textbox/obj_textbox.yy",},},
     {"id":{"name":"obj_tree01","path":"objects/obj_tree01/obj_tree01.yy",},},
+    {"id":{"name":"Object20","path":"objects/Object20/Object20.yy",},},
     {"id":{"name":"rm_gameMain","path":"rooms/rm_gameMain/rm_gameMain.yy",},},
     {"id":{"name":"scr_prompetControl","path":"scripts/scr_prompetControl/scr_prompetControl.yy",},},
     {"id":{"name":"snd_fountain","path":"sounds/snd_fountain/snd_fountain.yy",},},
