@@ -1,5 +1,8 @@
 // Variables
+runMax = 24;
+running = false;
 walkSpeed = 16;
+
 vx = 0;
 vy = 0;
 dir = 3;
