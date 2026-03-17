@@ -8,7 +8,7 @@ image_alpha += fadeSpeed;
 if (image_alpha == 1) {
 fadeMe = 1;
 }
-}; break;
+} break;
 // Fade out
 case 2: {
 if (image_alpha > 0) {
@@ -19,5 +19,5 @@ fadeMe = 3;
 // Queue up destroy
 alarm[0] = 2;
 }
-}; break;
+} break;
 }
