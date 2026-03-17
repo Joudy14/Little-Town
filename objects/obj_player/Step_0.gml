@@ -21,7 +21,7 @@ if (running) {
     moveSpeed = runMax;
 }
 
-// ================= MOVEMENT =================
+// ================= CALCULATE MOVEMENT =================
 vx = (moveRight - moveLeft) * moveSpeed * (1 - carryLimit);
 vy = (moveDown - moveUp) * moveSpeed * (1 - carryLimit);
 
@@ -53,6 +53,13 @@ if (vx != 0 || vy != 0) {
     if (vy > 0) dir = 3;
     if (vy < 0) dir = 1;
 
+    // ================= DUST EFFECT (7.16–7.17) =================
+    if (running) {
+        if (irandom(5) == 0) {
+            instance_create_depth(x, y, depth + 1, obj_dust);
+        }
+    }
+
     // State
     if (hasItem == noone) {
         myState = playerState.walking;
@@ -60,7 +67,7 @@ if (vx != 0 || vy != 0) {
         myState = playerState.carrying;
     }
 
-    // Audio
+    // Audio listener
     audio_listener_set_position(0, x, y, 0);
 }
 
@@ -80,7 +87,7 @@ if (nearbyNPC) {
         }
     }
 
-    if (npcPrompt == noone) {
+    if (npcPrompt == noone || npcPrompt == undefined) {
         npcPrompt = scr_showPrompt(nearbyNPC, nearbyNPC.x, nearbyNPC.y - 450);
     }
 
@@ -102,7 +109,7 @@ nearbyItem = collision_rectangle(
 
 if (nearbyItem && !nearbyNPC) {
 
-    if (itemPrompt == noone) {
+    if (itemPrompt == noone || itemPrompt == undefined) {
         itemPrompt = scr_showPrompt(nearbyItem, nearbyItem.x, nearbyItem.y - 300);
     }
 
