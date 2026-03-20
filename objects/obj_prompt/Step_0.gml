@@ -12,7 +12,7 @@ image_alpha += fadeSpeed;
 if (image_alpha >= 1) {
 fadeMe = "fadeVisible";
 }
-}; break;
+} break;
 // Fade out
 case "fadeOut": {
 if (image_alpha > 0) {
@@ -22,5 +22,5 @@ if (image_alpha <= 0) {
 fadeMe = "fadeDone";
 alarm[0] = 2; // Queue up destroy
 }
-}; break;
+} break;
 }
