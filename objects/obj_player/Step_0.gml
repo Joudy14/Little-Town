@@ -1,4 +1,9 @@
-// ================= MOVEMENT INPUT =================
+if (global.sequenceState == seqState.playing) {
+    moveRight = 0;
+    moveLeft = 0;
+    moveUp = 0;
+    moveDown = 0;
+} 
 if (global.playerControl) {
     moveRight = keyboard_check(vk_right);
     moveUp    = keyboard_check(vk_up);

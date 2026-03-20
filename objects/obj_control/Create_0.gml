@@ -1,2 +1,9 @@
-// Set my state
-myState = itemState.idle;
+enum seqState {
+    notPlaying,
+    playing,
+    finished
+}
+
+global.sequenceState = seqState.notPlaying;
+curSeq = noone;
+curSeqLayer = "Cutscene";
