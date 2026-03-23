@@ -1,7 +1,7 @@
 var _text;
 
 // Only if player can act
-if (global.playerControl) {
+if (global.playerControl == true) {
 
     // ================= NPC =================
     if (nearbyNPC) {

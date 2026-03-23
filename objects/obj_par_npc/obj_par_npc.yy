@@ -30,6 +30,18 @@
     {"$GMObjectProperty":"v2","%Name":"loopRange01","filters":[],"listItems":[],"multiselect":false,"name":"loopRange01","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"30","varType":0,},
     {"$GMObjectProperty":"v2","%Name":"loopRange02","filters":[],"listItems":[],"multiselect":false,"name":"loopRange02","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"240","varType":0,},
     {"$GMObjectProperty":"v2","%Name":"myText","filters":[],"listItems":[],"multiselect":false,"name":"myText","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"\"Woh, Hello there!\"","varType":2,},
+    {"$GMObjectProperty":"v2","%Name":"myItem","filters":[
+        "GMObject",
+      ],"listItems":[],"multiselect":false,"name":"myItem","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"","varType":5,},
+    {"$GMObjectProperty":"v2","%Name":"itemTextHappy","filters":[],"listItems":[],"multiselect":false,"name":"itemTextHappy","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"\"Text for the right item\"","varType":2,},
+    {"$GMObjectProperty":"v2","%Name":"itemTextSad","filters":[],"listItems":[],"multiselect":false,"name":"itemTextSad","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"\"Text for the wrong item\"","varType":2,},
+    {"$GMObjectProperty":"v2","%Name":"itemTextDone","filters":[],"listItems":[],"multiselect":false,"name":"itemTextDone","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"\"Thank you next\"","varType":2,},
+    {"$GMObjectProperty":"v2","%Name":"sequenceHappy","filters":[
+        "GMSequence",
+      ],"listItems":[],"multiselect":false,"name":"sequenceHappy","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"","varType":5,},
+    {"$GMObjectProperty":"v2","%Name":"sequenceSad","filters":[
+        "GMSequence",
+      ],"listItems":[],"multiselect":false,"name":"sequenceSad","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"","varType":5,},
   ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",

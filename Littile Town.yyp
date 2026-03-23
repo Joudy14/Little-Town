@@ -65,6 +65,8 @@
     {"id":{"name":"obj_tree01","path":"objects/obj_tree01/obj_tree01.yy",},},
     {"id":{"name":"Object20","path":"objects/Object20/Object20.yy",},},
     {"id":{"name":"rm_gameMain","path":"rooms/rm_gameMain/rm_gameMain.yy",},},
+    {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
+    {"id":{"name":"Room3","path":"rooms/Room3/Room3.yy",},},
     {"id":{"name":"scr_itemControl","path":"scripts/scr_itemControl/scr_itemControl.yy",},},
     {"id":{"name":"scr_prompetControl","path":"scripts/scr_prompetControl/scr_prompetControl.yy",},},
     {"id":{"name":"seq_bakery_happy","path":"sequences/seq_bakery_happy/seq_bakery_happy.yy",},},
@@ -171,6 +173,8 @@
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
     {"roomId":{"name":"rm_gameMain","path":"rooms/rm_gameMain/rm_gameMain.yy",},},
+    {"roomId":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
+    {"roomId":{"name":"Room3","path":"rooms/Room3/Room3.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
