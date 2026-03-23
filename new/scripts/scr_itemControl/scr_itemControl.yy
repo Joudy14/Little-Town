@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_itemControl",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_itemControl",
+  "parent":{
+    "name":"new",
+    "path":"new.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
