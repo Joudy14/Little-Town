@@ -1,4 +1,5 @@
-var _text;
+var _text, _seq;
+
 
 // Only if player can act
 if (global.playerControl == true) {
