@@ -42,6 +42,17 @@ iii.sequenceToShow = _seq;
 }
 }
 }
+// If NPC is "done"
+if (nearbyNPC.myState == npcState.done) {
+_text = nearbyNPC.itemTextDone;
+if (!instance_exists(obj_textbox)) {
+iii = instance_create_depth(nearbyNPC.x,nearbyNPC.y-400,-
+10000,obj_textbox);
+iii.textToShow = _text;
+}
+}
+
+}
 
  
     // ================= DROP ITEM (ANYWHERE) =================
