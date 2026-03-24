@@ -10,6 +10,7 @@ if (global.playerControl == true) {
         if (hasItem == noone) {
 
             _text = nearbyNPC.myText;
+			
 
             if (!instance_exists(obj_textbox)) {
                 var iii = instance_create_depth(nearbyNPC.x, nearbyNPC.y - 400, -10000, obj_textbox);
@@ -18,15 +19,20 @@ if (global.playerControl == true) {
         } // If player has item (and it still exists)
 	if (hasItem != noone && instance_exists(hasItem)) {
 // If player has correct item
-	if (hasItem.object_index == nearbyNPC.myItem) {_text = nearbyNPC.itemTextHappy;
+	if (hasItem.object_index == nearbyNPC.myItem) {
+		_text = nearbyNPC.itemTextHappy;
+		_seq = nearbyNPC.sequenceHappy;
 }
 // Or if player has incorrect item
-else {_text = nearbyNPC.itemTextSad;
+else {
+	_text = nearbyNPC.itemTextSad;
+	_seq = nearbyNPC.sequenceSad;
 }
 // Create textbox
 if (!instance_exists(obj_textbox)) { iii = instance_create_depth(nearbyNPC.x,nearbyNPC.y-400,-
 10000,obj_textbox);
 iii.textToShow = _text;
+iii.sequenceToShow = _seq;
 }
 }
     }
