@@ -20,3 +20,8 @@ taken,
 used,
 puttingBack,
 }
+// NPC states
+enum npcState {
+normal,
+done,
+}
