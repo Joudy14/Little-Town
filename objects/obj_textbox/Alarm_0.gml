@@ -4,6 +4,8 @@ global.playerControl = true;
 }
 // Create Sequence if appropriate
 if (sequenceToShow != noone) {
+	// Play NPC Sequence
+scr_playSequence(sequenceToShow);
 // Set Sequence to centre of Camera view
 var _camX =
 camera_get_view_x(view_camera[0])+floor(camera_get_view_width(view_camera[0])*0.5)
