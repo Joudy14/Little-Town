@@ -5,38 +5,42 @@ var _text, _seq;
 if (global.playerControl == true) {
 
     // ================= NPC =================
-    if (nearbyNPC) {
-
-        if (hasItem == noone) {
-
-            _text = nearbyNPC.myText;
-			
-
-            if (!instance_exists(obj_textbox)) {
-                var iii = instance_create_depth(nearbyNPC.x, nearbyNPC.y - 400, -10000, obj_textbox);
-                iii.textToShow = _text;
-            }
-        } // If player has item (and it still exists)
-	if (hasItem != noone && instance_exists(hasItem)) {
+// If near an NPC
+if (nearbyNPC) {
+// If player does not have an item
+if (hasItem == noone || hasItem == undefined) {
+_text = nearbyNPC.myText;
+if (!instance_exists(obj_textbox)) {
+iii = instance_create_depth(nearbyNPC.x,nearbyNPC.y-400,-
+10000,obj_textbox);
+iii.textToShow = _text;
+}
+}
+// If player has item (and it still exists)
+if (hasItem != noone && instance_exists(hasItem)) {
 // If player has correct item
-	if (hasItem.object_index == nearbyNPC.myItem) {
-		_text = nearbyNPC.itemTextHappy;
-		_seq = nearbyNPC.sequenceHappy;
+if (hasItem.object_index == nearbyNPC.myItem) {
+_text = nearbyNPC.itemTextHappy;
+_seq = nearbyNPC.sequenceHappy;
+// Check if we should remove item, mark NPC
+alarm[1] = 10;
 }
 // Or if player has incorrect item
 else {
-	_text = nearbyNPC.itemTextSad;
-	_seq = nearbyNPC.sequenceSad;
+_text = nearbyNPC.itemTextSad;
+_seq = nearbyNPC.sequenceSad;
+
 }
 // Create textbox
-if (!instance_exists(obj_textbox)) { iii = instance_create_depth(nearbyNPC.x,nearbyNPC.y-400,-
+if (!instance_exists(obj_textbox)) {iii = instance_create_depth(nearbyNPC.x,nearbyNPC.y-400,-
 10000,obj_textbox);
 iii.textToShow = _text;
 iii.sequenceToShow = _seq;
+
 }
 }
-    }
- 
+}
+
  
     // ================= DROP ITEM (ANYWHERE) =================
     else if (hasItem != noone) {
