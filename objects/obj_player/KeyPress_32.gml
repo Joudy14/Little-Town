@@ -7,6 +7,8 @@ if (global.playerControl == true) {
     // ================= NPC =================
 // If near an NPC
 if (nearbyNPC) {
+	// If NPC is still available
+if (nearbyNPC.myState == npcState.normal) {
 // If player does not have an item
 if (hasItem == noone || hasItem == undefined) {
 _text = nearbyNPC.myText;
