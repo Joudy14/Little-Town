@@ -74,6 +74,7 @@
     {"id":{"name":"scr_sequenceControl","path":"scripts/scr_sequenceControl/scr_sequenceControl.yy",},},
     {"id":{"name":"seq_bakery_happy","path":"sequences/seq_bakery_happy/seq_bakery_happy.yy",},},
     {"id":{"name":"seq_gameOver","path":"sequences/seq_gameOver/seq_gameOver.yy",},},
+    {"id":{"name":"Sequence3","path":"sequences/Sequence3/Sequence3.yy",},},
     {"id":{"name":"snd_fountain","path":"sounds/snd_fountain/snd_fountain.yy",},},
     {"id":{"name":"snd_gameOver","path":"sounds/snd_gameOver/snd_gameOver.yy",},},
     {"id":{"name":"snd_greeting01","path":"sounds/snd_greeting01/snd_greeting01.yy",},},
