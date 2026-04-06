@@ -1,4 +1,3 @@
-// @description Fade effects
 // Fade effects
 switch fadeMe {
     // Fade in
@@ -12,6 +11,7 @@ switch fadeMe {
         }
     };
     break;
+    
     // Fade out
     case 2:
     {

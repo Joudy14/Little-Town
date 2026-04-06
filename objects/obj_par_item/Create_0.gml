@@ -1,4 +1,3 @@
-// @description Set my state and animation variables
 // Set my state
 myState = itemState.idle;
 putDownY = 0;

@@ -1,4 +1,3 @@
-// @description Fade effects and bobbing animation
 // Bob up and down
 y += shift;
 

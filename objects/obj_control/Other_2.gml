@@ -1,4 +1,3 @@
-// @description Initialize all game systems
 // Game variables
 global.playerControl = true;
 townBGMvolume = audio_sound_get_gain(snd_townBGM);

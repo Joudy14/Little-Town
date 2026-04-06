@@ -1,4 +1,3 @@
-// @description Listen for Sequence broadcast messages
 // Listen for Broadcast Messages
 switch (event_data[? "message"]) {
     case "sequenceStart":

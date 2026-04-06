@@ -1,4 +1,3 @@
-// @description Draw textbox
 // Draw textbox
 draw_self();
 

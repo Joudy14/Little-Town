@@ -1,4 +1,4 @@
-// @description Textbox variables
+// Textbox variables
 textToShow = "Put whatever text you like into this string!";
 textWidth = 450;
 lineHeight = 28;

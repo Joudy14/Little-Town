@@ -1,4 +1,3 @@
-// @description Control Sequences and check game completion
 // Control Sequences
 switch sequenceState {
     case seqState.playing:
@@ -35,7 +34,7 @@ switch sequenceState {
             audio_sound_gain(snd_townAmbience,townAmbienceVolume,60);
         }
         
-        // Check if NPCs are "done"
+        // Check if NPCs are "done" (for Session 9)
         if (global.gameOver == false) {
             if (instance_exists(obj_npc_baker) && instance_exists(obj_npc_teacher) && instance_exists(obj_npc_grocer)) {
                 if (obj_npc_baker.myState == npcState.done && obj_npc_teacher.myState == npcState.done && obj_npc_grocer.myState == npcState.done) {

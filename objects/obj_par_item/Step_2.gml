@@ -1,4 +1,3 @@
-// @description Depth, animation and position tracking
 // Depth, animation
 switch myState {
     // If item is sitting on the ground
@@ -11,7 +10,7 @@ switch myState {
     // If item has been taken
     case itemState.taken:
     {
-        // Keep item lined up with player
+        // Keep track of player position
         var _result = scr_itemPosition();
         x = _result[0];
         depth = _result[2];

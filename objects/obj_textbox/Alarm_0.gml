@@ -1,4 +1,3 @@
-// @description Destroy and optionally play sequence
 // Return control to player if no Sequence to load
 if (sequenceToShow == noone) {
     global.playerControl = true;

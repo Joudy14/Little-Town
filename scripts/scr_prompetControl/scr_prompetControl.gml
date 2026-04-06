@@ -15,17 +15,13 @@ function scr_showPrompt(_object,_x,_y){
 function scr_dismissPrompt(_whichPrompt,_toReset){
     if (_whichPrompt != undefined) {
         if (instance_exists(_whichPrompt)) {
-            // Tell prompt Object to fade out
             with (_whichPrompt) {
                 fadeMe = "fadeOut";
             }
-            // Reset appropriate prompt variable
             if (instance_exists(obj_player)) {
                 with (obj_player) {
                     switch (_toReset) {
-                        // Reset npcPrompt
                         case 0: npcPrompt = noone; break;
-                        // Reset itemPrompt
                         case 1: itemPrompt = noone; break;
                     }
                 }
