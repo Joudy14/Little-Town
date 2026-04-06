@@ -83,6 +83,8 @@ if (vx != 0 || vy != 0) {
     }
 }
 
+// DEBUG - Add this at the bottom of Step Event
+show_debug_message("myState = " + string(myState) + " | hasItem = " + string(hasItem) + " | nearbyItem = " + string(nearbyItem));
 // If Idle
 if (vx == 0 && vy == 0) {
     // If I'm not picking up or putting down an item
@@ -127,15 +129,15 @@ if (!nearbyNPC) {
 // Check for collision with Items
 nearbyItem = collision_rectangle(x-lookRange,y-lookRange,x+lookRange,y+lookRange,obj_par_item,false,true);
 if (nearbyItem && !nearbyNPC) {
-    // Pop up prompt
     if (itemPrompt == noone || itemPrompt == undefined) {
-        show_debug_message("obj_player has found an item!");
         itemPrompt = scr_showPrompt(nearbyItem,nearbyItem.x,nearbyItem.y-300);
     }
 }
 if (!nearbyItem || nearbyNPC) {
-    // Get rid of prompt
-    scr_dismissPrompt(itemPrompt,1);
+    if (itemPrompt != noone) {
+        scr_dismissPrompt(itemPrompt,1);
+        itemPrompt = noone;
+    }
 }
 
 // If picking up an item
@@ -145,6 +147,7 @@ if (myState == playerState.pickingUp) {
         global.playerControl = true;
     }
 }
+
 
 // If putting down an item
 if (myState == playerState.puttingDown) {

@@ -1,33 +1,50 @@
-// Depth, animation
 switch myState {
-    // If item is sitting on the ground
     case itemState.idle:
     {
         depth = -y;
+        image_alpha = 1;
+        mask_index = sprite_index;  // Restore collision
     };
     break;
     
-    // If item has been taken
     case itemState.taken:
     {
-        // Keep track of player position
+        mask_index = -1;  // Remove collision so player doesn't detect it
+        
         var _result = scr_itemPosition();
-        x = _result[0];
-        depth = _result[2];
         
         if (instance_exists(obj_player)) {
-            // Animate item being picked up
+            if (obj_player.myState == playerState.puttingDown) {
+                x = _result[0];
+                y = _result[1];
+                depth = _result[2];
+                image_alpha = 1;
+            }
+            else {
+                switch (obj_player.dir) {
+                    case 0: case 2: case 3:
+                        x = _result[0];
+                        y = _result[1];
+                        depth = _result[2];
+                        image_alpha = 1;
+                        break;
+                    case 1:
+                        image_alpha = 0;
+                        break;
+                }
+            }
+            
             if (obj_player.myState == playerState.pickingUp) {
-                // Wait until third frame of animation
                 if (obj_player.image_index >= 2) {
                     if (y > _result[1]) {
                         y -= pickUpSp;
                     }
                 }
             }
-            // Position item while being carried
-            else {
-                y = _result[1];
+            else if (obj_player.myState != playerState.puttingDown) {
+                if (obj_player.dir != 1) {
+                    y = _result[1];
+                }
             }
         }
     };
@@ -35,14 +52,16 @@ switch myState {
     
     case itemState.puttingBack:
     {
-        // Animate item being put down
+        image_alpha = 1;
+        
         if (instance_exists(obj_player) && obj_player.myState == playerState.puttingDown) {
             if (y < putDownY) {
                 y += putDownSp;
             }
-            // Reset item state after being put down
             if (y >= putDownY) {
                 myState = itemState.idle;
+                image_alpha = 1;
+                mask_index = sprite_index;  // Restore collision
             }
         }
     };
