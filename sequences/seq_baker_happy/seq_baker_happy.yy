@@ -1,6 +1,6 @@
 {
   "$GMSequence":"v1",
-  "%Name":"seq_bakery_happy",
+  "%Name":"seq_baker_happy",
   "autoRecord":false,
   "backdropHeight":1080,
   "backdropImageOpacity":0.5,
@@ -35,7 +35,7 @@
     "resourceType":"KeyframeStore<MomentsEventKeyframe>",
     "resourceVersion":"2.0",
   },
-  "name":"seq_bakery_happy",
+  "name":"seq_baker_happy",
   "parent":{
     "name":"Sequences",
     "path":"folders/Sprites/Sequences.yy",

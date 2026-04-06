@@ -1,20 +1,16 @@
-if (global.sequenceState == seqState.playing) {
-    moveRight = 0;
-    moveLeft = 0;
-    moveUp = 0;
-    moveDown = 0;
+// Check keys for movement 
+if (global.playerControl == true) { 
+moveRight = keyboard_check(vk_right); 
+moveUp = keyboard_check(vk_up); 
+moveLeft = keyboard_check(vk_left); 
+moveDown = keyboard_check(vk_down); 
 } 
-if (global.playerControl) {
-    moveRight = keyboard_check(vk_right);
-    moveUp    = keyboard_check(vk_up);
-    moveLeft  = keyboard_check(vk_left);
-    moveDown  = keyboard_check(vk_down);
-} else {
-    moveRight = 0;
-    moveUp    = 0;
-    moveLeft  = 0;
-    moveDown  = 0;
-}
+if (global.playerControl == false) { 
+moveRight = 0; 
+moveUp = 0; 
+moveLeft = 0; 
+moveDown = 0; 
+} 
 
 // ================= RUNNING =================
 running = keyboard_check(vk_shift);
