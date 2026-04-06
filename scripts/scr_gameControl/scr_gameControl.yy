@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_prompetControl",
+  "%Name":"scr_gameControl",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_prompetControl",
+  "name":"scr_gameControl",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",
