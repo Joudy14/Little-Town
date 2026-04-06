@@ -1,3 +1,4 @@
+// @description Prompt variables
 // Prompt variables
 fadeMe = "fadeIn";
 fadeSpeed = 0.1;

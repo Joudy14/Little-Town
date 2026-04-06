@@ -37,9 +37,6 @@
     "name":"spr_item02",
     "path":"sprites/spr_item02/spr_item02.yy",
   },
-  "spriteMaskId":{
-    "name":"Sprite81",
-    "path":"sprites/Sprite81/Sprite81.yy",
-  },
+  "spriteMaskId":null,
   "visible":true,
 }

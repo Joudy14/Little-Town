@@ -175,7 +175,6 @@
     {"id":{"name":"spr_title_youDidIt","path":"sprites/spr_title_youDidIt/spr_title_youDidIt.yy",},},
     {"id":{"name":"spr_townTiles","path":"sprites/spr_townTiles/spr_townTiles.yy",},},
     {"id":{"name":"spr_tree01","path":"sprites/spr_tree01/spr_tree01.yy",},},
-    {"id":{"name":"Sprite81","path":"sprites/Sprite81/Sprite81.yy",},},
     {"id":{"name":"tiles_town","path":"tilesets/tiles_town/tiles_town.yy",},},
   ],
   "resourceType":"GMProject",
