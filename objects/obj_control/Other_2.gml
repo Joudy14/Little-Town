@@ -41,3 +41,7 @@ enum npcState {
     normal,
     done,
 }
+
+// Menu variables
+global.menuChoice = 0;
+menuActive = false;

@@ -1,10 +1,15 @@
 // Play music based on Room
 switch room {
+	    case rm_mainTitle:
+    {
+        audio_play_sound(snd_seq_good02_BGM,1,1);  // Title music
+    }
+    break;
     case rm_gameMain:
     {
         audio_play_sound(snd_townBGM,1,1);
         audio_play_sound(snd_townAmbience,1,1);
-    };
+    }
     break;
 }
 

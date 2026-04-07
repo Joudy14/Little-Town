@@ -14,8 +14,9 @@ if (global.playerControl == false) {
     moveDown = 0;
 }
 
-// Run with Shift key
-running = keyboard_check(vk_shift);
+
+// Run with X key
+running = keyboard_check(ord("X"));
 
 // Speed up if running
 if (running == true) {
@@ -39,9 +40,27 @@ if (running == false) {
 }
 
 // Calculate movement
-vx = ((moveRight - moveLeft) * (walkSpeed) * (1 - carryLimit) + runSpeed);
-vy = ((moveDown - moveUp) * (walkSpeed) * (1 - carryLimit) + runSpeed);
+var _moveX = (moveRight - moveLeft);
+var _moveY = (moveDown - moveUp);
 
+// Only allow running if actually moving
+if (running == true && (_moveX != 0 || _moveY != 0)) {
+    vx = (_moveX * (walkSpeed + runSpeed)) * (1 - carryLimit);
+    vy = (_moveY * (walkSpeed + runSpeed)) * (1 - carryLimit);
+} else {
+    vx = (_moveX * walkSpeed) * (1 - carryLimit);
+    vy = (_moveY * walkSpeed) * (1 - carryLimit);
+}
+
+// DEBUG - Show what keys are being detected
+if (keyboard_check(vk_up)) show_debug_message("KEY: UP");
+if (keyboard_check(vk_down)) show_debug_message("KEY: DOWN");
+if (keyboard_check(vk_left)) show_debug_message("KEY: LEFT");
+if (keyboard_check(vk_right)) show_debug_message("KEY: RIGHT");
+if (keyboard_check(ord("X"))) show_debug_message("KEY: X");
+
+// DEBUG - Show movement values
+show_debug_message("vx=" + string(vx) + " vy=" + string(vy) + " running=" + string(running));
 // If moving
 if (vx != 0 || vy != 0) {
     if !collision_point(x+vx,y,obj_par_environment,true,true) {
@@ -128,12 +147,12 @@ if (!nearbyNPC) {
 
 // Check for collision with Items
 nearbyItem = collision_rectangle(x-lookRange,y-lookRange,x+lookRange,y+lookRange,obj_par_item,false,true);
-if (nearbyItem && !nearbyNPC) {
+if (nearbyItem && !nearbyNPC && (hasItem == noone)) {  // ← Added hasItem check
     if (itemPrompt == noone || itemPrompt == undefined) {
         itemPrompt = scr_showPrompt(nearbyItem,nearbyItem.x,nearbyItem.y-300);
     }
 }
-if (!nearbyItem || nearbyNPC) {
+if (!nearbyItem || nearbyNPC || (hasItem != noone)) {  // ← Added hasItem check
     if (itemPrompt != noone) {
         scr_dismissPrompt(itemPrompt,1);
         itemPrompt = noone;

@@ -10,7 +10,7 @@ switch myState {
                 alarm[0] = irandom_range(loopRange01,loopRange02);
             }
         }
-    };
+    }
     break;
     
     case npcState.done:
@@ -18,7 +18,7 @@ switch myState {
         if (doneSprite != noone && sprite_index != doneSprite) {
             sprite_index = doneSprite;
         }
-    };
+    }
     break;
 }
 

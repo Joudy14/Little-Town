@@ -9,7 +9,7 @@ switch fadeMe {
         if (image_alpha >= 1) {
             fadeMe = 1;
         }
-    };
+    }
     break;
     
     // Fade out
@@ -23,6 +23,6 @@ switch fadeMe {
             // Queue up destroy
             alarm[0] = 2;
         }
-    };
+    }
     break;
 }
