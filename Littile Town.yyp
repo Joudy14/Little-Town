@@ -65,8 +65,10 @@
     {"id":{"name":"obj_store01","path":"objects/obj_store01/obj_store01.yy",},},
     {"id":{"name":"obj_textbox","path":"objects/obj_textbox/obj_textbox.yy",},},
     {"id":{"name":"obj_tree01","path":"objects/obj_tree01/obj_tree01.yy",},},
+    {"id":{"name":"rm_forest","path":"rooms/rm_forest/rm_forest.yy",},},
     {"id":{"name":"rm_gameMain","path":"rooms/rm_gameMain/rm_gameMain.yy",},},
     {"id":{"name":"rm_mainTitle","path":"rooms/rm_mainTitle/rm_mainTitle.yy",},},
+    {"id":{"name":"rm_river","path":"rooms/rm_river/rm_river.yy",},},
     {"id":{"name":"scr_itemControl","path":"scripts/scr_itemControl/scr_itemControl.yy",},},
     {"id":{"name":"scr_prompetControl","path":"scripts/scr_prompetControl/scr_prompetControl.yy",},},
     {"id":{"name":"scr_sequenceControl","path":"scripts/scr_sequenceControl/scr_sequenceControl.yy",},},
@@ -190,6 +192,8 @@
   "RoomOrderNodes":[
     {"roomId":{"name":"rm_mainTitle","path":"rooms/rm_mainTitle/rm_mainTitle.yy",},},
     {"roomId":{"name":"rm_gameMain","path":"rooms/rm_gameMain/rm_gameMain.yy",},},
+    {"roomId":{"name":"rm_forest","path":"rooms/rm_forest/rm_forest.yy",},},
+    {"roomId":{"name":"rm_river","path":"rooms/rm_river/rm_river.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
