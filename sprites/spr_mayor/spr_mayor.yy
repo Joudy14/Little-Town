@@ -1,6 +1,6 @@
 {
   "$GMSprite":"v2",
-  "%Name":"spr_baker_idle_down_1",
+  "%Name":"spr_mayor",
   "bboxMode":2,
   "bbox_bottom":492,
   "bbox_left":-7,
@@ -21,19 +21,19 @@
   "layers":[
     {"$GMImageLayer":"","%Name":"3ee60534-7e24-4ae3-add0-4ded5ad0f5b5","blendMode":0,"displayName":"default","isLocked":false,"name":"3ee60534-7e24-4ae3-add0-4ded5ad0f5b5","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
-  "name":"spr_baker_idle_down_1",
+  "name":"spr_mayor",
   "nineSlice":null,
   "origin":9,
   "parent":{
-    "name":"Mayr",
-    "path":"folders/Sprites/NPCs/Mayr.yy",
+    "name":"Mayor",
+    "path":"folders/Sprites/NPCs/Mayor.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
   "resourceVersion":"2.0",
   "sequence":{
     "$GMSequence":"v1",
-    "%Name":"spr_baker_idle_down",
+    "%Name":"spr_mayor",
     "autoRecord":true,
     "backdropHeight":768,
     "backdropImageOpacity":0.5,
@@ -57,7 +57,7 @@
       "resourceType":"KeyframeStore<MomentsEventKeyframe>",
       "resourceVersion":"2.0",
     },
-    "name":"spr_baker_idle_down",
+    "name":"spr_mayor",
     "playback":1,
     "playbackSpeed":7.0,
     "playbackSpeedType":0,
@@ -69,7 +69,7 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"65d16fe3-949b-45b7-8bf9-41fa3e75b936","path":"sprites/spr_baker_idle_down_1/spr_baker_idle_down_1.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"65d16fe3-949b-45b7-8bf9-41fa3e75b936","path":"sprites/spr_mayor/spr_mayor.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"c2fe0c0a-1fe7-44a0-a2e5-f60cc114e317","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
