@@ -57,6 +57,7 @@
     {"id":{"name":"obj_item06","path":"objects/obj_item06/obj_item06.yy",},},
     {"id":{"name":"obj_npc_baker","path":"objects/obj_npc_baker/obj_npc_baker.yy",},},
     {"id":{"name":"obj_npc_grocer","path":"objects/obj_npc_grocer/obj_npc_grocer.yy",},},
+    {"id":{"name":"obj_npc_mayor","path":"objects/obj_npc_mayor/obj_npc_mayor.yy",},},
     {"id":{"name":"obj_npc_teacher","path":"objects/obj_npc_teacher/obj_npc_teacher.yy",},},
     {"id":{"name":"obj_par_environment","path":"objects/obj_par_environment/obj_par_environment.yy",},},
     {"id":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},},
