@@ -3,9 +3,9 @@
   "%Name":"tiles_revier",
   "autoTileSets":[],
   "macroPageTiles":{
-    "SerialiseHeight":0,
-    "SerialiseWidth":0,
-    "TileSerialiseData":[],
+    "SerialiseHeight":2,
+    "SerialiseWidth":2,
+    "TileSerialiseData":[0,0,0,1,],
   },
   "name":"tiles_revier",
   "out_columns":5,
