@@ -35,7 +35,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.3.217",
+    "IDEVersion":"2024.14.4.222",
   },
   "name":"Littile Town",
   "resources":[
@@ -102,6 +102,7 @@
     {"id":{"name":"scanner","path":"sprites/scanner/scanner.yy",},},
     {"id":{"name":"spr_baker_angry","path":"sprites/spr_baker_angry/spr_baker_angry.yy",},},
     {"id":{"name":"spr_baker_happy","path":"sprites/spr_baker_happy/spr_baker_happy.yy",},},
+    {"id":{"name":"spr_baker_idle_down_1","path":"sprites/spr_baker_idle_down_1/spr_baker_idle_down_1.yy",},},
     {"id":{"name":"spr_baker_idle_down","path":"sprites/spr_baker_idle_down/spr_baker_idle_down.yy",},},
     {"id":{"name":"spr_baker_sad","path":"sprites/spr_baker_sad/spr_baker_sad.yy",},},
     {"id":{"name":"spr_baker_walk_down","path":"sprites/spr_baker_walk_down/spr_baker_walk_down.yy",},},
