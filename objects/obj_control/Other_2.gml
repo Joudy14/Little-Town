@@ -45,3 +45,28 @@ enum npcState {
 // Menu variables
 global.menuChoice = 0;
 menuActive = false;
+// ==========================================
+// SDLC TOWN: SCORING SYSTEM
+// ==========================================
+// Initialize global score (starts at 100)
+global.score = 100;
+
+// Track score changes for display
+global.last_score_change = 0;
+global.last_score_change_timer = 0;
+global.last_score_x = 0;
+global.last_score_y = 0;
+
+// Track which NPCs gave correct items
+global.mother_correct = false;
+global.teacher_correct = false;
+global.baker_correct = false;
+
+// Track validations performed
+global.mother_validated = false;
+global.teacher_validated = false;
+global.baker_validated = false;
+
+// Track penalties
+global.wrong_items_given = 0;
+global.skipped_validations = 0;

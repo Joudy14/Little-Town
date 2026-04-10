@@ -74,6 +74,7 @@
     {"id":{"name":"rm_river","path":"rooms/rm_river/rm_river.yy",},},
     {"id":{"name":"scr_itemControl","path":"scripts/scr_itemControl/scr_itemControl.yy",},},
     {"id":{"name":"scr_prompetControl","path":"scripts/scr_prompetControl/scr_prompetControl.yy",},},
+    {"id":{"name":"scr_scoreControl","path":"scripts/scr_scoreControl/scr_scoreControl.yy",},},
     {"id":{"name":"scr_sequenceControl","path":"scripts/scr_sequenceControl/scr_sequenceControl.yy",},},
     {"id":{"name":"seq_baker_happy","path":"sequences/seq_baker_happy/seq_baker_happy.yy",},},
     {"id":{"name":"seq_baker_sad","path":"sequences/seq_baker_sad/seq_baker_sad.yy",},},

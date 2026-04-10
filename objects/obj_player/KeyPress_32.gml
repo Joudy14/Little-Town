@@ -27,6 +27,17 @@ if (global.playerControl == true) {
                 // Check if item is CORRECT
                 if (hasItem.object_index == nearbyNPC.myItem) {
                     show_debug_message("DEBUG: CORRECT item!");
+                    
+                    // --- INSIDE CORRECT ITEM SECTION ---
+                    // Add +20 points
+                    scr_add_points(20, x, y - 50);
+                    
+                    // Mark which NPC got correct item (USING OLD NAMES FOR LOCAL TEST)
+                    if (nearbyNPC.object_index == obj_npc_teacher) global.mother_correct = true; // Old name for Mother
+                    if (nearbyNPC.object_index == obj_npc_grocer) global.teacher_correct = true;  // Old name for Teacher
+                    if (nearbyNPC.object_index == obj_npc_baker) global.baker_correct = true;     // Stays the same
+                    // -----------------------------------------------------
+                    
                     _text = nearbyNPC.itemTextHappy;
                     _seq = nearbyNPC.sequenceHappy;
                     
@@ -49,6 +60,13 @@ if (global.playerControl == true) {
                 }
                 else {
                     show_debug_message("DEBUG: WRONG item!");
+                    
+                    // --- INSIDE WRONG ITEM SECTION ---
+                    // Subtract 20 points
+                    scr_add_points(-20, x, y - 50);
+                    global.wrong_items_given += 1;
+                    // ---------------------------------------------------
+                    
                     _text = nearbyNPC.itemTextSad;
                     _seq = nearbyNPC.sequenceSad;
                     
@@ -60,8 +78,6 @@ if (global.playerControl == true) {
                     }
                     
                     // IMPORTANT: Item STAYS in player's hand
-                    // Do NOT destroy item
-                    // Do NOT clear hasItem
                 }
             }
         }

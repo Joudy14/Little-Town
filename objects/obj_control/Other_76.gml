@@ -25,4 +25,12 @@ switch (event_data[? "message"]) {
 		alarm[2] = 30;
     }
     break;
+	case "showFinalScore": {
+		global.playerControl = false;
+		show_debug_message("=== FINAL SCORE ===");
+		show_debug_message("Score: " + string(global.score));
+		show_debug_message("Rating: " + scr_update_rating());
+		show_debug_message("Correct Items: " + string(global.mother_correct + global.teacher_correct + global.baker_correct) + "/3");
+		show_debug_message("Validations: " + string(global.mother_validated + global.teacher_validated + global.baker_validated) + "/3");
+	}; break;
 }

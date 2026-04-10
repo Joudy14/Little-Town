@@ -117,3 +117,53 @@ if (menuActive == true) {
 }
 
 gpu_set_blendmode(bm_normal);
+
+// ==========================================
+// SDLC SCORING UI
+// ==========================================
+
+// Lock text alignment so it behaves
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+draw_set_font(font_textbox);
+
+// 1. Draw score background (semi-transparent BLACK box)
+draw_set_alpha(0.7);
+draw_set_color(c_black);  // <-- FIXED: Forced black background
+draw_rectangle(10, 10, 420, 90, false); // <-- FIXED: Widened to 420 to fit text
+
+// 2. Reset alpha and set color to white for the text
+draw_set_alpha(1.0);
+draw_set_color(c_white);
+
+// Draw score text
+draw_text(20, 20, "SDLC POINTS");
+draw_set_color(c_yellow);
+draw_text(20, 50, string(global.score));
+
+// Draw rating based on score
+draw_set_color(c_white);
+if (global.score >= 90) {
+    draw_text(120, 50, "🌟 EXCELLENT");
+} else if (global.score >= 70) {
+    draw_text(120, 50, "👍 GOOD");
+} else {
+    draw_text(120, 50, "⚠ NEEDS IMPROVEMENT");
+}
+
+// Draw floating score popup (when points change)
+if (global.last_score_change_timer > 0) {
+    global.last_score_change_timer -= 1;
+    
+    draw_set_alpha(global.last_score_change_timer / 30);
+    
+    if (global.last_score_change > 0) {
+        draw_set_color(c_lime);
+        draw_text(global.last_score_x, global.last_score_y - global.last_score_change_timer, "+" + string(global.last_score_change));
+    } else {
+        draw_set_color(c_red);
+        draw_text(global.last_score_x, global.last_score_y - global.last_score_change_timer, string(global.last_score_change));
+    }
+    
+    draw_set_alpha(1.0);
+}
