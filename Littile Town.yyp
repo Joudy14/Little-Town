@@ -24,6 +24,7 @@
     {"$GMFolder":"","%Name":"NPCs","folderPath":"folders/Sprites/NPCs.yy","name":"NPCs","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Baker","folderPath":"folders/Sprites/NPCs/Baker.yy","name":"Baker","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Grocer","folderPath":"folders/Sprites/NPCs/Grocer.yy","name":"Grocer","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Mayr","folderPath":"folders/Sprites/NPCs/Mayr.yy","name":"Mayr","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Teacher","folderPath":"folders/Sprites/NPCs/Teacher.yy","name":"Teacher","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"PLayer","folderPath":"folders/Sprites/PLayer.yy","name":"PLayer","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Sequences","folderPath":"folders/Sprites/Sequences.yy","name":"Sequences","resourceType":"GMFolder","resourceVersion":"2.0",},
