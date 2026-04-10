@@ -40,6 +40,7 @@
   "name":"Littile Town",
   "resources":[
     {"id":{"name":"font_textbox","path":"fonts/font_textbox/font_textbox.yy",},},
+    {"id":{"name":"checklist","path":"objects/checklist/checklist.yy",},},
     {"id":{"name":"closed_chest","path":"objects/closed_chest/closed_chest.yy",},},
     {"id":{"name":"key","path":"objects/key/key.yy",},},
     {"id":{"name":"obj_barre101","path":"objects/obj_barre101/obj_barre101.yy",},},
