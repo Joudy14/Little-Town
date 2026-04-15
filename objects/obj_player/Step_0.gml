@@ -1,24 +1,27 @@
 // @description Main Step Logic
 
-// Check keys for movement
-if (global.playerControl == true) {
+// ==========================================
+// 1. MOVEMENT INPUT (With Inventory Gate)
+// ==========================================
+// Only detect keys if player has control AND menus are closed
+if (global.playerControl == true && global.inventory_open == false && obj_control.menuActive == false) {
     moveRight = keyboard_check(vk_right);
     moveUp = keyboard_check(vk_up);
     moveLeft = keyboard_check(vk_left);
     moveDown = keyboard_check(vk_down);
-}
-if (global.playerControl == false) {
+    running = keyboard_check(ord("X"));
+} else {
+    // Force everything to zero/false so the player freezes
     moveRight = 0;
     moveUp = 0;
     moveLeft = 0;
     moveDown = 0;
+    running = false;
 }
 
-
-// Run with X key
-running = keyboard_check(ord("X"));
-
-// Speed up if running
+// ==========================================
+// 2. RUNNING & DUST LOGIC
+// ==========================================
 if (running == true) {
     // Ramp up
     if (runSpeed < runMax) {
@@ -29,39 +32,39 @@ if (running == true) {
         alarm[0] = 2;
         startDust = 1;
     }
-}
-// Slow down if no longer running
-if (running == false) {
-    // Ramp down
+} else {
+    // Slow down if no longer running
     if (runSpeed > 0) {
         runSpeed -= 1;
     }
     startDust = 0;
 }
 
-// Calculate movement
+// ==========================================
+// 3. CALCULATE VELOCITY (Diagonal Speed Fix)
+// ==========================================
 var _moveX = (moveRight - moveLeft);
 var _moveY = (moveDown - moveUp);
 
-// Only allow running if actually moving
-if (running == true && (_moveX != 0 || _moveY != 0)) {
-    vx = (_moveX * (walkSpeed + runSpeed)) * (1 - carryLimit);
-    vy = (_moveY * (walkSpeed + runSpeed)) * (1 - carryLimit);
+if (_moveX != 0 || _moveY != 0) {
+    // 1. Get the exact direction of movement (0 to 360 degrees)
+    var _dir_angle = point_direction(0, 0, _moveX, _moveY);
+    
+    // 2. Determine current base speed
+    var _spd = (running == true) ? (walkSpeed + runSpeed) : walkSpeed;
+    _spd = _spd * (1 - carryLimit);
+    
+    // 3. Normalize the vector! This applies the speed perfectly in the chosen direction
+    vx = lengthdir_x(_spd, _dir_angle);
+    vy = lengthdir_y(_spd, _dir_angle);
 } else {
-    vx = (_moveX * walkSpeed) * (1 - carryLimit);
-    vy = (_moveY * walkSpeed) * (1 - carryLimit);
+    vx = 0;
+    vy = 0;
 }
 
-// DEBUG - Show what keys are being detected
-if (keyboard_check(vk_up)) show_debug_message("KEY: UP");
-if (keyboard_check(vk_down)) show_debug_message("KEY: DOWN");
-if (keyboard_check(vk_left)) show_debug_message("KEY: LEFT");
-if (keyboard_check(vk_right)) show_debug_message("KEY: RIGHT");
-if (keyboard_check(ord("X"))) show_debug_message("KEY: X");
-
-// DEBUG - Show movement values
-show_debug_message("vx=" + string(vx) + " vy=" + string(vy) + " running=" + string(running));
-// If moving
+// ==========================================
+// 4. COLLISIONS & MOVEMENT EXECUTION
+// ==========================================
 if (vx != 0 || vy != 0) {
     if !collision_point(x+vx,y,obj_par_environment,true,true) {
         x += vx;
@@ -69,97 +72,77 @@ if (vx != 0 || vy != 0) {
     if !collision_point(x,y+vy,obj_par_environment,true,true) {
         y += vy;
     }
+    
     // Change direction based on movement
-    if (vx > 0) {
-        dir = 0;
-    }
-    if (vx < 0) {
-        dir = 2;
-    }
-    if (vy > 0) {
-        dir = 3;
-    }
-    if (vy < 0) {
-        dir = 1;
-    }
+    if (vx > 0) dir = 0;
+    if (vx < 0) dir = 2;
+    if (vy > 0) dir = 3;
+    if (vy < 0) dir = 1;
+
     // Set state
-    // If we don't have an item
     if (hasItem == noone) {
         myState = playerState.walking;
-    }
-    // If we're carrying an item
-    else {
+    } else {
         myState = playerState.carrying;
     }
-    // Set my listener if Sequence is playing
+    
+    // Audio Listener positioning
     if (instance_exists(obj_control) && obj_control.sequenceState == seqState.playing) {
         var _camX = camera_get_view_x(view_camera[0]) + floor(camera_get_view_width(view_camera[0]) * 0.5);
         var _camY = camera_get_view_y(view_camera[0]) + floor(camera_get_view_height(view_camera[0]) * 0.5);
         audio_listener_set_position(0,_camX,_camY,0);
     } else {
-        // Otherwise, move audio listener with me
         audio_listener_set_position(0,x,y,0);
     }
 }
 
-// DEBUG - Add this at the bottom of Step Event
-show_debug_message("myState = " + string(myState) + " | hasItem = " + string(hasItem) + " | nearbyItem = " + string(nearbyItem));
-// If Idle
+// ==========================================
+// 5. IDLE STATES
+// ==========================================
 if (vx == 0 && vy == 0) {
-    // If I'm not picking up or putting down an item
     if (myState != playerState.pickingUp && myState != playerState.puttingDown) {
-        // If we don't have an item
         if (hasItem == noone) {
             myState = playerState.idle;
-        }
-        // If we're carrying an item
-        else {
+        } else {
             myState = playerState.carryIdle;
         }
     }
 }
 
-// Check for collision with NPCs
+// ==========================================
+// 6. NPC & ITEM COLLISIONS (Prompts)
+// ==========================================
 nearbyNPC = collision_rectangle(x-lookRange,y-lookRange,x+lookRange,y+lookRange,obj_par_npc,false,true);
 if (nearbyNPC) {
-    // Play greeting sound
     if (hasGreeted == false) {
         if !(audio_is_playing(snd_greeting01)) {
             audio_play_sound(snd_greeting01,1,0);
             hasGreeted = true;
         }
     }
-    // Pop up prompt
     if (npcPrompt == noone || npcPrompt == undefined) {
         npcPrompt = scr_showPrompt(nearbyNPC,nearbyNPC.x,nearbyNPC.y-450);
     }
-    show_debug_message("obj_player has found an NPC!");
-}
-if (!nearbyNPC) {
-    // Reset greeting
-    if (hasGreeted == true) {
-        hasGreeted = false;
-    }
-    // Get rid of prompt
+} else {
+    if (hasGreeted == true) hasGreeted = false;
     scr_dismissPrompt(npcPrompt,0);
-    show_debug_message("obj_player hasn't found anything");
 }
 
-// Check for collision with Items
 nearbyItem = collision_rectangle(x-lookRange,y-lookRange,x+lookRange,y+lookRange,obj_par_item,false,true);
-if (nearbyItem && !nearbyNPC && (hasItem == noone)) {  // ← Added hasItem check
+if (nearbyItem && !nearbyNPC && (hasItem == noone)) {
     if (itemPrompt == noone || itemPrompt == undefined) {
         itemPrompt = scr_showPrompt(nearbyItem,nearbyItem.x,nearbyItem.y-300);
     }
-}
-if (!nearbyItem || nearbyNPC || (hasItem != noone)) {  // ← Added hasItem check
+} else {
     if (itemPrompt != noone) {
         scr_dismissPrompt(itemPrompt,1);
         itemPrompt = noone;
     }
 }
 
-// If picking up an item
+// ==========================================
+// 7. ANIMATION STATE OVERRIDES
+// ==========================================
 if (myState == playerState.pickingUp) {
     if (image_index >= image_number-1) {
         myState = playerState.carrying;
@@ -167,20 +150,16 @@ if (myState == playerState.pickingUp) {
     }
 }
 
-
-// If putting down an item
 if (myState == playerState.puttingDown) {
-    // Reset weight
     carryLimit = 0;
-    // Reset my state once animation finishes
     if (image_index >= image_number-1) {
         myState = playerState.idle;
         global.playerControl = true;
     }
 }
 
-// Auto-choose Sprite based on state and direction
+// ==========================================
+// 8. FINAL UPDATES
+// ==========================================
 sprite_index = playerSpr[myState][dir];
-
-// Depth sorting
 depth = -y;
