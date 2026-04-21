@@ -1,0 +1,1 @@
+has_been_talked_to = false;

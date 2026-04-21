@@ -1,7 +1,122 @@
 var _text, _seq;
 
+
+// Ensure inventory exists
+if (!variable_global_exists("inventory_keys")) {
+    global.inventory = [];
+    global.inventory_keys = [];
+}
+
 // If player has control
 if (global.playerControl == true) {
+	
+	// ==========================================
+// INTERACT WITH CHEST
+// ==========================================
+if (nearbyChest && !nearbyNPC) {
+    
+    if (!nearbyChest.is_open) {
+        
+        // Check if player has Key in inventory
+        var _has_key = false;
+        var _key_index = -1;
+        
+        for (var i = 0; i < array_length(global.inventory_keys); i++) {
+            if (global.inventory_keys[i] == "item04") {  // Key is item04
+                _has_key = true;
+                _key_index = i;
+                break;
+            }
+        }
+        
+        if (_has_key) {
+            // Remove key from inventory
+            array_delete(global.inventory, _key_index, 1);
+            array_delete(global.inventory_keys, _key_index, 1);
+            
+            // Open chest
+            nearbyChest.is_open = true;
+            audio_play_sound(snd_pop01, 1, 0);
+            
+            // SPAWN REWARD (ONLY ONCE)
+            if (!nearbyChest.reward_spawned) {
+                nearbyChest.reward_spawned = true;
+                
+                // Create reward item at chest position
+                var _reward = instance_create_layer(nearbyChest.x, nearbyChest.y - 150, "Instances", obj_item03);
+                _reward.item_key = "item03";
+                
+                show_debug_message("REWARD SPAWNED at X:" + string(nearbyChest.x) + " Y:" + string(nearbyChest.y - 50));
+            }
+            
+            // Show success message
+            var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+            _msg.textToShow = "You unlocked the chest! A reward appears!";
+            
+        } else {
+            // No key message
+            var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+            _msg.textToShow = "This chest is locked. You need a KEY to open it.";
+        }
+        
+    } else {
+        // Chest already open
+        var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+        _msg.textToShow = "The chest is already open.";
+    }
+    
+    exit; // Stop here
+}
+
+// ==========================================
+// BUILD BRIDGE
+// ==========================================
+if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
+    
+    // Check if player has Wood (item06)
+    var _has_wood = false;
+    var _wood_index = -1;
+    
+    for (var i = 0; i < array_length(global.inventory_keys); i++) {
+        if (global.inventory_keys[i] == "item06") {
+            _has_wood = true;
+            _wood_index = i;
+            break;
+        }
+    }
+    
+    if (_has_wood) {
+        // Remove wood from inventory
+        array_delete(global.inventory, _wood_index, 1);
+        array_delete(global.inventory_keys, _wood_index, 1);
+        
+        // Build bridge
+        nearbyBridge.is_built = true;
+        nearbyBridge.visible = true;
+        
+        // DESTROY THE RIVER BLOCKS at bridge location
+        with (obj_river_block_2) {
+            if (distance_to_point(other.nearbyBridge.x, other.nearbyBridge.y) < 100) {
+                instance_destroy();
+                show_debug_message("River block destroyed at X:" + string(x) + " Y:" + string(y));
+            }
+        }
+        
+        audio_play_sound(snd_pop01, 1, 0);
+        
+        var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+        _msg.textToShow = "You built a bridge! Now you can cross the river.";
+        
+    } else {
+        var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+        _msg.textToShow = "The river is too wide. You need WOOD to build a bridge.";
+    }
+    
+    exit;
+}
+
+
+
     
     // PRIORITY 1: TALK TO NPC
     if (nearbyNPC) {

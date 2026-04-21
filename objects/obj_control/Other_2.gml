@@ -51,6 +51,9 @@ menuActive = false;
 // Initialize global score (starts at 100)
 global.score = 100;
 
+global.river_message_shown = false;
+
+
 // Track score changes for display
 global.last_score_change = 0;
 global.last_score_change_timer = 0;
@@ -70,3 +73,15 @@ global.baker_validated = false;
 // Track penalties
 global.wrong_items_given = 0;
 global.skipped_validations = 0;
+
+
+// Inventory system
+global.inventory = [];
+global.inventory_keys = [];
+global.show_inventory = false;
+global.inventory_selection = 0;
+global.waiting_for_npc_choice = false;
+global.waiting_for_item_selection = false;
+global.current_npc = noone;
+global.temp_held_item = noone;
+global.temp_held_item_name = "";

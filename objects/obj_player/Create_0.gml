@@ -25,6 +25,10 @@ startDust = 0;
 npcPrompt = noone;
 myState = playerState.idle;
 
+nearbyBridge = noone;
+bridgePrompt = noone;
+nearbyChest = noone;
+
 // Player Sprite array [myState][dir]
 // Idle
 playerSpr[playerState.idle][0] = spr_player_idle_right;

@@ -163,3 +163,68 @@ if (myState == playerState.puttingDown) {
 // ==========================================
 sprite_index = playerSpr[myState][dir];
 depth = -y;
+
+
+
+// Check for collision with Chest
+nearbyChest = collision_rectangle(x - lookRange, y - lookRange, x + lookRange, y + lookRange, obj_chest, false, true);
+
+// ==========================================
+// ROOM TRANSITIONS - COMPLETE WITH ALL COORDINATES
+// ==========================================
+
+// --- MAIN ROOM (rm_gameMain) ---
+if (room == rm_gameMain) {
+    
+    // DOWN to FOREST
+    if (x > 2934 && x < 3034 && y > 2924 && y < 3024) {
+        room_goto(rm_forest);
+        x = 1792;
+        y = 200;
+    }
+    
+    // RIGHT to RIVER
+    if (x > 4901 && x < 5001 && y > 1351 && y < 1451) {
+        room_goto(rm_river);
+        x = 227;
+        y = 998;
+    }
+}
+
+// --- FOREST ROOM (rm_forest) ---
+if (room == rm_forest) {
+    
+    // UP to MAIN
+    if (x > 1743 && x < 1843 && y > 26 && y < 126) {
+        room_goto(rm_gameMain);
+        x = 2995;
+        y = 2900;
+    }
+}
+
+// --- RIVER ROOM (rm_river) ---
+if (room == rm_river) {
+    
+    // LEFT to MAIN (using your new exit point)
+    if (x > 43 && x < 143 && y > 967 && y < 1067) {
+        room_goto(rm_gameMain);
+        x = 4900;    // Just left of main exit (4951 - 51)
+        y = 1401;    // Same Y as main exit
+    }
+}
+
+
+// Bridge prompt
+if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
+    if (bridgePrompt == noone) {
+        bridgePrompt = scr_showPrompt(nearbyBridge, nearbyBridge.x, nearbyBridge.y - 50);
+    }
+} else {
+    if (bridgePrompt != noone) {
+        scr_dismissPrompt(bridgePrompt, 0);
+        bridgePrompt = noone;
+    }
+}
+
+nearbyBridge = collision_rectangle(x - 50, y - 50, x + 50, y + 50, obj_bridge, false, true);
+

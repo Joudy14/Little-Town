@@ -1,19 +1,19 @@
 {
   "$GMObject":"",
-  "%Name":"obj_item05",
-  "eventList":[],
-  "managed":true,
-  "name":"obj_item05",
-  "overriddenProperties":[
-    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemName","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"“Book”",},
+  "%Name":"obj_river_block",
+  "eventList":[
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
+  "managed":true,
+  "name":"obj_river_block",
+  "overriddenProperties":[],
   "parent":{
     "name":"obj",
     "path":"folders/Objects/obj.yy",
   },
   "parentObjectId":{
-    "name":"obj_par_item",
-    "path":"objects/obj_par_item/obj_par_item.yy",
+    "name":"obj_par_environment",
+    "path":"objects/obj_par_environment/obj_par_environment.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,
@@ -33,9 +33,9 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_item05",
-    "path":"sprites/spr_item05/spr_item05.yy",
+    "name":"spr_block",
+    "path":"sprites/spr_block/spr_block.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

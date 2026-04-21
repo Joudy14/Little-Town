@@ -31,8 +31,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_chest_closed",
-    "path":"sprites/spr_chest_closed/spr_chest_closed.yy",
+    "name":"spr_item77",
+    "path":"sprites/spr_item77/spr_item77.yy",
   },
   "spriteMaskId":null,
   "visible":true,
