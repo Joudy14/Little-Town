@@ -1,0 +1,1 @@
+instance_destroy(); // Deletes itself so it doesn't stay on screen forever

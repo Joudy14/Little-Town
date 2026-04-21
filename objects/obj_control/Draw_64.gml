@@ -1,30 +1,28 @@
-// Force draw settings
+// ==========================================
+// INITIALIZATION & SETUP
+// ==========================================
 draw_set_alpha(1);
 gpu_set_blendmode(bm_normal);
 
-// Get screen size
 var _sw = display_get_gui_width();
 var _sh = display_get_gui_height();
 var _centerX = _sw * 0.5;
 var _centerY = _sh * 0.5;
 
-// Draw Game Over Menu
+// ==========================================
+// GAME OVER MENU UI
+// ==========================================
 if (menuActive == true) {
-    
-    // === BACKGROUND PATTERN ===
-    // Soft cream background
-    draw_set_color(make_colour_rgb(255, 248, 225));  // Cream
+    draw_set_color(make_colour_rgb(255, 248, 225));
     draw_rectangle(0, 0, _sw, _sh, false);
     
-    // Dot pattern
-    draw_set_color(make_colour_rgb(240, 228, 200));  // Slightly darker cream
+    draw_set_color(make_colour_rgb(240, 228, 200));
     for (var i = 0; i < _sw; i += 40) {
         for (var j = 0; j < _sh; j += 40) {
             draw_circle(i, j, 3, false);
         }
     }
     
-    // Diagonal line pattern overlay
     draw_set_color(make_colour_rgb(230, 215, 185));
     draw_set_alpha(0.3);
     for (var i = -_sh; i < _sw + _sh; i += 30) {
@@ -32,68 +30,51 @@ if (menuActive == true) {
     }
     draw_set_alpha(1);
     
-    // === MAIN CARD ===
-    // Soft shadow
     draw_set_color(make_colour_rgb(180, 160, 130));
     draw_rectangle(_centerX - 400, _centerY - 300, _centerX + 400, _centerY + 300, false);
     
-    // Main white card with rounded corners effect (using rectangles)
-    draw_set_color(make_colour_rgb(255, 255, 245));  // Off-white
+    draw_set_color(make_colour_rgb(255, 255, 245));
     draw_rectangle(_centerX - 395, _centerY - 295, _centerX + 395, _centerY + 295, false);
     
-    // Decorative border
-    draw_set_color(make_colour_rgb(255, 200, 100));  // Warm gold
+    draw_set_color(make_colour_rgb(255, 200, 100));
     draw_rectangle(_centerX - 390, _centerY - 290, _centerX + 390, _centerY + 290, true);
     draw_rectangle(_centerX - 385, _centerY - 285, _centerX + 385, _centerY + 285, true);
     
-    // === TITLE ===
     draw_set_font(font_textbox);
     draw_set_halign(fa_center);
     draw_set_valign(fa_middle);
     
-    // Star decorations
-    draw_set_color(make_colour_rgb(255, 215, 0));  // Gold
+    draw_set_color(make_colour_rgb(255, 215, 0));
     for (var i = 0; i < 5; i++) {
         draw_text(_centerX - 300 + (i * 150), _centerY - 220, "★");
     }
     
-    // Main title
-    draw_set_color(make_colour_rgb(200, 100, 50));  // Warm orange-brown
-    draw_set_font(font_textbox);
+    draw_set_color(make_colour_rgb(200, 100, 50));
     draw_text(_centerX, _centerY - 180, "✨ GAME COMPLETE! ✨");
     
     draw_set_color(make_colour_rgb(150, 80, 40));
     draw_text(_centerX, _centerY - 130, "You helped everyone in town!");
     
-    // === MENU OPTIONS ===
-    // Play Again button background
     if (global.menuChoice == 0) {
-        // Highlighted - colorful
-        draw_set_color(make_colour_rgb(100, 200, 100));  // Soft green
+        draw_set_color(make_colour_rgb(100, 200, 100));
         draw_rectangle(_centerX - 150, _centerY - 20, _centerX + 150, _centerY + 40, false);
         draw_set_color(make_colour_rgb(255, 255, 255));
         draw_text(_centerX, _centerY + 10, "▶  PLAY AGAIN  ◀");
     } else {
-        // Normal
         draw_set_color(make_colour_rgb(80, 80, 100));
         draw_text(_centerX, _centerY + 10, "PLAY AGAIN");
     }
     
-    // Quit button background
     if (global.menuChoice == 1) {
-        // Highlighted - colorful
-        draw_set_color(make_colour_rgb(200, 100, 100));  // Soft red
+        draw_set_color(make_colour_rgb(200, 100, 100));
         draw_rectangle(_centerX - 150, _centerY + 60, _centerX + 150, _centerY + 120, false);
         draw_set_color(make_colour_rgb(255, 255, 255));
         draw_text(_centerX, _centerY + 90, "▶  QUIT  ◀");
     } else {
-        // Normal
         draw_set_color(make_colour_rgb(80, 80, 100));
         draw_text(_centerX, _centerY + 90, "QUIT");
     }
     
-    // === DECORATIVE ELEMENTS ===
-    // Small flowers/stars around the card
     draw_set_color(make_colour_rgb(255, 180, 100));
     draw_text(_centerX - 450, _centerY - 100, "✿");
     draw_text(_centerX + 450, _centerY - 100, "✿");
@@ -104,16 +85,11 @@ if (menuActive == true) {
     draw_text(_centerX - 480, _centerY, "❤");
     draw_text(_centerX + 480, _centerY, "❤");
     
-    // === INSTRUCTIONS ===
     draw_set_color(make_colour_rgb(120, 100, 80));
     draw_set_alpha(0.8);
     draw_text(_centerX, _sh - 80, "UP / DOWN  =  Select");
     draw_text(_centerX, _sh - 40, "ENTER / SPACE  =  Confirm");
     draw_set_alpha(1);
-    
-    // Reset
-    draw_set_halign(fa_left);
-    draw_set_valign(fa_top);
 }
 
 gpu_set_blendmode(bm_normal);
@@ -121,27 +97,21 @@ gpu_set_blendmode(bm_normal);
 // ==========================================
 // SDLC SCORING UI
 // ==========================================
-
-// Lock text alignment so it behaves
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_font(font_textbox);
 
-// 1. Draw score background (semi-transparent BLACK box)
 draw_set_alpha(0.7);
-draw_set_color(c_black);  // <-- FIXED: Forced black background
-draw_rectangle(10, 10, 420, 90, false); // <-- FIXED: Widened to 420 to fit text
+draw_set_color(c_black);
+draw_rectangle(10, 10, 420, 90, false); 
 
-// 2. Reset alpha and set color to white for the text
 draw_set_alpha(1.0);
 draw_set_color(c_white);
 
-// Draw score text
 draw_text(20, 20, "SDLC POINTS");
 draw_set_color(c_yellow);
 draw_text(20, 50, string(global.score));
 
-// Draw rating based on score
 draw_set_color(c_white);
 if (global.score >= 90) {
     draw_text(120, 50, "🌟 EXCELLENT");
@@ -151,10 +121,9 @@ if (global.score >= 90) {
     draw_text(120, 50, "⚠ NEEDS IMPROVEMENT");
 }
 
-// Draw floating score popup (when points change)
+// Score Pop-up effect
 if (global.last_score_change_timer > 0) {
     global.last_score_change_timer -= 1;
-    
     draw_set_alpha(global.last_score_change_timer / 30);
     
     if (global.last_score_change > 0) {
@@ -164,6 +133,126 @@ if (global.last_score_change_timer > 0) {
         draw_set_color(c_red);
         draw_text(global.last_score_x, global.last_score_y - global.last_score_change_timer, string(global.last_score_change));
     }
-    
     draw_set_alpha(1.0);
+}
+
+// ==========================================
+// INVENTORY DISPLAY (THE NEW CREAM UI)
+// ==========================================
+if (global.inventory_open) {
+    
+    // Soft cream background
+    draw_set_color(make_colour_rgb(255, 248, 225));
+    draw_rectangle(_centerX - 300, _centerY - 200, _centerX + 300, _centerY + 200, false);
+    
+    // Dot pattern
+    draw_set_color(make_colour_rgb(240, 228, 200));
+    for (var i = 0; i < 600; i += 40) {
+        for (var j = 0; j < 400; j += 40) {
+            draw_circle(_centerX - 300 + i, _centerY - 200 + j, 3, false);
+        }
+    }
+    
+    // Diagonal line pattern
+    draw_set_color(make_colour_rgb(230, 215, 185));
+    draw_set_alpha(0.3);
+    for (var i = -400; i < 600; i += 30) {
+        draw_line(_centerX - 300 + i, _centerY - 200, _centerX - 300 + i + 400, _centerY + 200);
+    }
+    draw_set_alpha(1);
+    
+    // Main card with shadow
+    draw_set_color(make_colour_rgb(180, 160, 130));
+    draw_rectangle(_centerX - 290, _centerY - 190, _centerX + 290, _centerY + 190, false);
+    
+    draw_set_color(make_colour_rgb(255, 255, 245));
+    draw_rectangle(_centerX - 285, _centerY - 185, _centerX + 285, _centerY + 185, false);
+    
+    // Decorative border
+    draw_set_color(make_colour_rgb(255, 200, 100));
+    draw_rectangle(_centerX - 280, _centerY - 180, _centerX + 280, _centerY + 180, true);
+    draw_rectangle(_centerX - 275, _centerY - 175, _centerX + 275, _centerY + 175, true);
+    
+    // Title
+    draw_set_font(font_textbox);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle);
+    
+    draw_set_color(make_colour_rgb(200, 100, 50));
+    draw_text(_centerX, _centerY - 130, "INVENTORY");
+    
+    // Separator line
+    draw_set_color(make_colour_rgb(255, 200, 100));
+    draw_line(_centerX - 200, _centerY - 100, _centerX + 200, _centerY - 100);
+    
+ // Items list
+    draw_set_halign(fa_center);
+    
+    if (array_length(global.inventory) == 0) {
+        draw_set_color(make_colour_rgb(150, 120, 90));
+        draw_text(_centerX, _centerY - 30, "Your inventory is empty");
+        draw_set_color(make_colour_rgb(180, 150, 120));
+        draw_text(_centerX, _centerY, "Find items by exploring the town!");
+    } else {
+        var _startY = _centerY - 70;
+        
+        // --- SLIDING WINDOW LOGIC ---
+        var _max_visible = 6; // The maximum number of items that fit in the box
+        var _start_i = 0;     // Where the list starts drawing
+        
+        // If your cursor goes lower than the visible window, push the window down
+        if (global.selected_index >= _max_visible) {
+            _start_i = global.selected_index - _max_visible + 1;
+        }
+        
+        // Ensure we don't try to draw more items than actually exist
+        var _end_i = min(array_length(global.inventory), _start_i + _max_visible);
+        
+        // Draw "Scroll Up" indicator if items are hidden above
+        if (_start_i > 0) {
+            draw_set_color(make_colour_rgb(200, 150, 100));
+            draw_text(_centerX, _startY - 25, "▲ . . . ▲");
+        }
+        
+        var _draw_slot = 0; // Tracks which row (0 through 5) we are currently drawing
+        
+        // Only loop through the items inside our visible window
+        for (var i = _start_i; i < _end_i; i++) {
+            var _yPos = _startY + (_draw_slot * 30); // 30 is the spacing between items
+            
+            // The Highlight Logic
+            if (i == global.selected_index) {
+                draw_set_color(make_colour_rgb(255, 215, 0));
+                draw_rectangle(_centerX - 220, _yPos - 12, _centerX + 220, _yPos + 18, false);
+                draw_set_color(make_colour_rgb(80, 40, 20));
+                draw_text(_centerX, _yPos, "> " + global.inventory[i] + " <");
+            } else {
+                draw_set_color(make_colour_rgb(100, 70, 40));
+                draw_text(_centerX, _yPos, "- " + global.inventory[i]);
+            }
+            
+            _draw_slot += 1; // Move down to the next row in the menu
+        }
+        
+        // Draw "Scroll Down" indicator if items are hidden below
+        if (_end_i < array_length(global.inventory)) {
+            draw_set_color(make_colour_rgb(200, 150, 100));
+            draw_text(_centerX, _startY + (_max_visible * 30), "▼ . . . ▼");
+        }
+    }
+    
+    // Bottom separator
+    draw_set_color(make_colour_rgb(255, 200, 100));
+    draw_line(_centerX - 200, _centerY + 100, _centerX + 200, _centerY + 100);
+    
+    // Instructions
+    draw_set_color(make_colour_rgb(120, 100, 80));
+    draw_set_alpha(0.8);
+    draw_text(_centerX, _centerY + 130, "W / S  =  Scroll");
+    draw_text(_centerX, _centerY + 160, "Q  =  Close Inventory");
+    draw_set_alpha(1);
+    
+    // Reset alignment
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
 }
