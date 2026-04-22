@@ -193,6 +193,17 @@ if (nearbyChest && !nearbyChest.is_open && !nearbyNPC) {
     }
 }
 
+// Spawn pending chest reward when textbox closes
+if (global.pending_reward_x != noone && !instance_exists(obj_textbox)) {
+    var _reward = instance_create_layer(global.pending_reward_x, global.pending_reward_y, "Instances", global.pending_reward_item);
+    _reward.item_key = "item03";   // or set item properties as needed
+    show_debug_message("Reward spawned after textbox closed");
+    // Clear pending
+    global.pending_reward_x = noone;
+    global.pending_reward_y = noone;
+    global.pending_reward_item = noone;
+}
+
 // ==========================================
 // ROOM TRANSITIONS - COMPLETE WITH ALL COORDINATES
 // ==========================================

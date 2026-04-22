@@ -7,6 +7,9 @@ global.gameStart = false;
 
 global.pending_item_name = "";
 global.pending_item_key = "";
+global.pending_reward_x = noone;
+global.pending_reward_y = noone;
+global.pending_reward_item = noone;
 
 global.picked_up_items = [];   // Stores keys like "item01", "item02", etc.
 

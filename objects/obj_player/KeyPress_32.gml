@@ -39,31 +39,25 @@ if (global.playerControl == true) {
             show_debug_message("=== CHEST INTERACTION ===");
             show_debug_message("global.inventory_keys: " + string(global.inventory_keys));
             
-            if (_has_key) {
-                // Remove key from inventory
-                array_delete(global.inventory, _key_index, 1);
-                array_delete(global.inventory_keys, _key_index, 1);
-                
-                // Open chest
-                nearbyChest.is_open = true;
-                audio_play_sound(snd_pop01, 1, 0);
-                
-                // SPAWN REWARD (ONLY ONCE)
-                if (!nearbyChest.reward_spawned) {
-                    nearbyChest.reward_spawned = true;
-                    
-                    // Create reward item at chest position
-                    var _reward = instance_create_layer(nearbyChest.x, nearbyChest.y - 150, "Instances", obj_item03);
-                    _reward.item_key = "item03";
-                    
-                    show_debug_message("REWARD SPAWNED at X:" + string(nearbyChest.x) + " Y:" + string(nearbyChest.y - 50));
-                }
-                
-                // Show success message
-                var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
-                _msg.textToShow = "You unlocked the chest! A reward appears!";
-                
-            } else {
+if (_has_key) {
+    // Remove key, open chest, play sound (as before)
+    array_delete(global.inventory, _key_index, 1);
+    array_delete(global.inventory_keys, _key_index, 1);
+    nearbyChest.is_open = true;
+    audio_play_sound(snd_pop01, 1, 0);
+    
+    // Show success message (but do NOT spawn reward yet)
+    var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+    _msg.textToShow = "You unlocked the chest! A reward appears!";
+    
+    // Store reward position and item for later
+    global.pending_reward_x = nearbyChest.x;
+    global.pending_reward_y = nearbyChest.y - 90;  // adjust as needed
+    global.pending_reward_item = obj_item03;       // or whatever reward object
+    
+    // Mark that chest reward has been queued (so we don't queue again)
+    nearbyChest.reward_spawned = true;   // prevent double spawning
+} else {
                 // No key message
                 var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
                 _msg.textToShow = "This chest is locked. You need a KEY to open it.";
@@ -78,61 +72,49 @@ if (global.playerControl == true) {
         exit; // Stop here
     }
     
-    // ==========================================
-    // BUILD BRIDGE
-    // ==========================================
-    if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
-        
-        show_debug_message("=== BRIDGE DEBUG ===");
-        show_debug_message("nearbyBridge exists: " + string(nearbyBridge != noone));
-        show_debug_message("is_built: " + string(nearbyBridge.is_built));
-        show_debug_message("Inventory keys: " + string(global.inventory_keys));
-        
-        var _has_wood = false;
-        var _wood_index = -1;
-        
-        for (var i = 0; i < array_length(global.inventory_keys); i++) {
-            show_debug_message("Checking key: " + string(global.inventory_keys[i]));
-            if (global.inventory_keys[i] == "item06") {
-                _has_wood = true;
-                _wood_index = i;
-                show_debug_message("WOOD FOUND at index " + string(i));
-                break;
-            }
+// ==========================================
+// BUILD BRIDGE
+// ==========================================
+if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
+    
+    // Check by item name instead of key
+    var _has_wood = false;
+    var _wood_index = -1;
+    for (var i = 0; i < array_length(global.inventory); i++) {
+        if (global.inventory[i] == "Wood") {
+            _has_wood = true;
+            _wood_index = i;
+            break;
         }
-        
-        show_debug_message("_has_wood: " + string(_has_wood));
-        
-        if (_has_wood) {
-            // Remove wood from inventory
-            array_delete(global.inventory, _wood_index, 1);
-            array_delete(global.inventory_keys, _wood_index, 1);
-            
-            // Build bridge
-            nearbyBridge.is_built = true;
-            nearbyBridge.visible = true;
-            
-            // DESTROY THE RIVER BLOCKS at bridge location
-            with (obj_river_block_2) {
-                if (distance_to_point(other.nearbyBridge.x, other.nearbyBridge.y) < 100) {
-                    instance_destroy();
-                    show_debug_message("River block destroyed at X:" + string(x) + " Y:" + string(y));
-                }
-            }
-            
-            audio_play_sound(snd_pop01, 1, 0);
-            
-            var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
-            _msg.textToShow = "You built a bridge! Now you can cross the river.";
-            
-        } else {
-            var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
-            _msg.textToShow = "The river is too wide. You need WOOD to build a bridge.";
-            show_debug_message("NO WOOD - showing message");
-        }
-        
-        exit;
     }
+    
+    if (_has_wood) {
+        // Remove wood from inventory
+        array_delete(global.inventory, _wood_index, 1);
+        array_delete(global.inventory_keys, _wood_index, 1);
+        
+        // Build bridge
+        nearbyBridge.is_built = true;
+        nearbyBridge.visible = true;
+        
+        // Destroy river blocks
+        with (obj_river_block_2) {
+            if (distance_to_point(other.nearbyBridge.x, other.nearbyBridge.y) < 100) {
+                instance_destroy();
+            }
+        }
+        
+        audio_play_sound(snd_pop01, 1, 0);
+        var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+        _msg.textToShow = "You built a bridge! Now you can cross the river.";
+        
+    } else {
+        var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+        _msg.textToShow = "The river is too wide. You need WOOD to build a bridge.";
+    }
+    
+    exit;
+}
     
     // ==========================================
     // PRIORITY 1: TALK TO NPC
