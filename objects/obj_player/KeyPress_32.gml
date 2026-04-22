@@ -1,6 +1,5 @@
 var _text, _seq;
 
-
 // Ensure inventory exists
 if (!variable_global_exists("inventory_keys")) {
     global.inventory = [];
@@ -9,116 +8,135 @@ if (!variable_global_exists("inventory_keys")) {
 
 // If player has control
 if (global.playerControl == true) {
-	
-	// ==========================================
-// INTERACT WITH CHEST
-// ==========================================
-if (nearbyChest && !nearbyNPC) {
     
-    if (!nearbyChest.is_open) {
+    // ==========================================
+    // INTERACT WITH CHEST
+    // ==========================================
+    if (nearbyChest && !nearbyNPC) {
         
-        // Check if player has Key in inventory
-        var _has_key = false;
-        var _key_index = -1;
+        if (!nearbyChest.is_open) {
+            
+            // Check if player has Key in inventory
+            var _has_key = false;
+            for (var i = 0; i < array_length(global.inventory); i++) {
+                if (global.inventory[i] == "Key") {
+                    _has_key = true;
+                    break;
+                }
+            }
+            var _key_index = -1;
+            
+            for (var i = 0; i < array_length(global.inventory_keys); i++) {
+                show_debug_message("Checking key: " + string(global.inventory_keys[i]));
+                if (global.inventory_keys[i] == "item04") {
+                    _has_key = true;
+                    _key_index = i;
+                    break;
+                }
+            }
+            show_debug_message("Has key? " + string(_has_key));
+            
+            show_debug_message("=== CHEST INTERACTION ===");
+            show_debug_message("global.inventory_keys: " + string(global.inventory_keys));
+            
+            if (_has_key) {
+                // Remove key from inventory
+                array_delete(global.inventory, _key_index, 1);
+                array_delete(global.inventory_keys, _key_index, 1);
+                
+                // Open chest
+                nearbyChest.is_open = true;
+                audio_play_sound(snd_pop01, 1, 0);
+                
+                // SPAWN REWARD (ONLY ONCE)
+                if (!nearbyChest.reward_spawned) {
+                    nearbyChest.reward_spawned = true;
+                    
+                    // Create reward item at chest position
+                    var _reward = instance_create_layer(nearbyChest.x, nearbyChest.y - 150, "Instances", obj_item03);
+                    _reward.item_key = "item03";
+                    
+                    show_debug_message("REWARD SPAWNED at X:" + string(nearbyChest.x) + " Y:" + string(nearbyChest.y - 50));
+                }
+                
+                // Show success message
+                var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+                _msg.textToShow = "You unlocked the chest! A reward appears!";
+                
+            } else {
+                // No key message
+                var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+                _msg.textToShow = "This chest is locked. You need a KEY to open it.";
+            }
+            
+        } else {
+            // Chest already open
+            var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+            _msg.textToShow = "The chest is already open.";
+        }
+        
+        exit; // Stop here
+    }
+    
+    // ==========================================
+    // BUILD BRIDGE
+    // ==========================================
+    if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
+        
+        show_debug_message("=== BRIDGE DEBUG ===");
+        show_debug_message("nearbyBridge exists: " + string(nearbyBridge != noone));
+        show_debug_message("is_built: " + string(nearbyBridge.is_built));
+        show_debug_message("Inventory keys: " + string(global.inventory_keys));
+        
+        var _has_wood = false;
+        var _wood_index = -1;
         
         for (var i = 0; i < array_length(global.inventory_keys); i++) {
-            if (global.inventory_keys[i] == "item04") {  // Key is item04
-                _has_key = true;
-                _key_index = i;
+            show_debug_message("Checking key: " + string(global.inventory_keys[i]));
+            if (global.inventory_keys[i] == "item06") {
+                _has_wood = true;
+                _wood_index = i;
+                show_debug_message("WOOD FOUND at index " + string(i));
                 break;
             }
         }
         
-        if (_has_key) {
-            // Remove key from inventory
-            array_delete(global.inventory, _key_index, 1);
-            array_delete(global.inventory_keys, _key_index, 1);
+        show_debug_message("_has_wood: " + string(_has_wood));
+        
+        if (_has_wood) {
+            // Remove wood from inventory
+            array_delete(global.inventory, _wood_index, 1);
+            array_delete(global.inventory_keys, _wood_index, 1);
             
-            // Open chest
-            nearbyChest.is_open = true;
+            // Build bridge
+            nearbyBridge.is_built = true;
+            nearbyBridge.visible = true;
+            
+            // DESTROY THE RIVER BLOCKS at bridge location
+            with (obj_river_block_2) {
+                if (distance_to_point(other.nearbyBridge.x, other.nearbyBridge.y) < 100) {
+                    instance_destroy();
+                    show_debug_message("River block destroyed at X:" + string(x) + " Y:" + string(y));
+                }
+            }
+            
             audio_play_sound(snd_pop01, 1, 0);
             
-            // SPAWN REWARD (ONLY ONCE)
-            if (!nearbyChest.reward_spawned) {
-                nearbyChest.reward_spawned = true;
-                
-                // Create reward item at chest position
-                var _reward = instance_create_layer(nearbyChest.x, nearbyChest.y - 150, "Instances", obj_item03);
-                _reward.item_key = "item03";
-                
-                show_debug_message("REWARD SPAWNED at X:" + string(nearbyChest.x) + " Y:" + string(nearbyChest.y - 50));
-            }
-            
-            // Show success message
             var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
-            _msg.textToShow = "You unlocked the chest! A reward appears!";
+            _msg.textToShow = "You built a bridge! Now you can cross the river.";
             
         } else {
-            // No key message
             var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
-            _msg.textToShow = "This chest is locked. You need a KEY to open it.";
+            _msg.textToShow = "The river is too wide. You need WOOD to build a bridge.";
+            show_debug_message("NO WOOD - showing message");
         }
         
-    } else {
-        // Chest already open
-        var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
-        _msg.textToShow = "The chest is already open.";
+        exit;
     }
     
-    exit; // Stop here
-}
-
-// ==========================================
-// BUILD BRIDGE
-// ==========================================
-if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
-    
-    // Check if player has Wood (item06)
-    var _has_wood = false;
-    var _wood_index = -1;
-    
-    for (var i = 0; i < array_length(global.inventory_keys); i++) {
-        if (global.inventory_keys[i] == "item06") {
-            _has_wood = true;
-            _wood_index = i;
-            break;
-        }
-    }
-    
-    if (_has_wood) {
-        // Remove wood from inventory
-        array_delete(global.inventory, _wood_index, 1);
-        array_delete(global.inventory_keys, _wood_index, 1);
-        
-        // Build bridge
-        nearbyBridge.is_built = true;
-        nearbyBridge.visible = true;
-        
-        // DESTROY THE RIVER BLOCKS at bridge location
-        with (obj_river_block_2) {
-            if (distance_to_point(other.nearbyBridge.x, other.nearbyBridge.y) < 100) {
-                instance_destroy();
-                show_debug_message("River block destroyed at X:" + string(x) + " Y:" + string(y));
-            }
-        }
-        
-        audio_play_sound(snd_pop01, 1, 0);
-        
-        var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
-        _msg.textToShow = "You built a bridge! Now you can cross the river.";
-        
-    } else {
-        var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
-        _msg.textToShow = "The river is too wide. You need WOOD to build a bridge.";
-    }
-    
-    exit;
-}
-
-
-
-    
+    // ==========================================
     // PRIORITY 1: TALK TO NPC
+    // ==========================================
     if (nearbyNPC) {
         show_debug_message("DEBUG: Near NPC");
         
@@ -156,6 +174,15 @@ if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
                     _text = nearbyNPC.itemTextHappy;
                     _seq = nearbyNPC.sequenceHappy;
                     
+                    // --- ADD: Update global NPC state (has correct item, not validated yet) ---
+                    var _npc_obj = nearbyNPC.object_index;
+                    if (global.npc_states[$ _npc_obj] == undefined) {
+                        global.npc_states[$ _npc_obj] = { done: false, has_item: false, gave_wrong: false, validated: false };
+                    }
+                    global.npc_states[$ _npc_obj].has_item = true;
+                    global.npc_states[$ _npc_obj].gave_wrong = false;
+                    // ------------------------------------------------------------------------
+                    
                     // Destroy the item
                     with (hasItem) {
                         instance_destroy();
@@ -185,6 +212,15 @@ if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
                     _text = nearbyNPC.itemTextSad;
                     _seq = nearbyNPC.sequenceSad;
                     
+                    // --- ADD: Update global NPC state (has wrong item) ---
+                    var _npc_obj = nearbyNPC.object_index;
+                    if (global.npc_states[$ _npc_obj] == undefined) {
+                        global.npc_states[$ _npc_obj] = { done: false, has_item: false, gave_wrong: false, validated: false };
+                    }
+                    global.npc_states[$ _npc_obj].has_item = true;
+                    global.npc_states[$ _npc_obj].gave_wrong = true;
+                    // -----------------------------------------------------
+                    
                     // Create textbox with sequence
                     if (!instance_exists(obj_textbox)) {
                         iii = instance_create_depth(nearbyNPC.x,nearbyNPC.y-400,-10000,obj_textbox);
@@ -207,7 +243,9 @@ if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
         }
     }
     
+    // ==========================================
     // PRIORITY 2: PUT DOWN ITEM (holding item, not near NPC)
+    // ==========================================
     else if (hasItem != noone && !nearbyNPC) {
         show_debug_message("DEBUG: Putting down item - dir = " + string(dir));
         myState = playerState.puttingDown;
@@ -223,7 +261,9 @@ if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
         carryLimit = 0;
     }
     
+    // ==========================================
     // PRIORITY 3: PICK UP ITEM (near item, not holding anything)
+    // ==========================================
     else if (nearbyItem && !nearbyNPC && (hasItem == noone)) {
         show_debug_message("DEBUG: Picking up item");
         
@@ -239,6 +279,9 @@ if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
         myState = playerState.pickingUp;
         image_index = 0;
         hasItem = nearbyItem;
+		global.pending_item_name = hasItem.itemName;
+global.pending_item_key = hasItem.item_key;
+show_debug_message("Stored pending item: name=" + global.pending_item_name + " key=" + global.pending_item_key);
         carryLimit = hasItem.itemWeight * 0.1;
         with (hasItem) {
             myState = itemState.taken;

@@ -5,6 +5,11 @@ townAmbienceVolume = audio_sound_get_gain(snd_townAmbience);
 global.gameOver = false;
 global.gameStart = false;
 
+global.pending_item_name = "";
+global.pending_item_key = "";
+
+global.picked_up_items = [];   // Stores keys like "item01", "item02", etc.
+
 // Player states
 enum playerState {
     idle,
@@ -30,6 +35,12 @@ enum seqState {
     playing,
     finished,
 }
+
+global.npc_states = {
+    obj_npc_baker: { done: false, has_item: false, gave_wrong: false, validated: false },
+    obj_npc_teacher: { done: false, has_item: false, gave_wrong: false, validated: false },
+    obj_npc_grocer: { done: false, has_item: false, gave_wrong: false, validated: false }
+};
 
 // Sequence variables
 sequenceState = seqState.notPlaying;

@@ -6,3 +6,4 @@ pickUpSp = 17;
 
 // --- THE LABEL ---
 itemName = "Pencil"
+item_key = "item05";   // change the number for each item

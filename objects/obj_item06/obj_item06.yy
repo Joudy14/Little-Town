@@ -1,13 +1,12 @@
 {
   "$GMObject":"",
   "%Name":"obj_item06",
-  "eventList":[],
+  "eventList":[
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+  ],
   "managed":true,
   "name":"obj_item06",
-  "overriddenProperties":[
-    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemName","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"Water”",},
-    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemWeight","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"2.1",},
-  ],
+  "overriddenProperties":[],
   "parent":{
     "name":"obj",
     "path":"folders/Objects/obj.yy",
@@ -34,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_item06",
-    "path":"sprites/spr_item06/spr_item06.yy",
+    "name":"spr_wood",
+    "path":"sprites/spr_wood/spr_wood.yy",
   },
   "spriteMaskId":null,
   "visible":true,

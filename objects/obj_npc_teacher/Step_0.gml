@@ -97,7 +97,7 @@ depth = -y;
                 if (instance_exists(obj_textbox)) instance_destroy(obj_textbox);
                 
                 var _inst = instance_create_depth(x, y - 300, -10000, obj_textbox);
-                _inst.textToShow = "Thank you. Press V for validation.";
+                _inst.textToShow = "Thank you.";
                 
                 npc_state = 7; 
                 exit; 

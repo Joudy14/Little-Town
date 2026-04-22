@@ -90,7 +90,7 @@ if (distance_to_object(obj_player) < 60) {
                 if (instance_exists(obj_textbox)) instance_destroy(obj_textbox);
                 
                 var _inst = instance_create_depth(x, y - 300, -10000, obj_textbox);
-                _inst.textToShow = itemTextThanks + " Press V for validation.";
+                _inst.textToShow = itemTextThanks;
                 
                 npc_state = 7; 
                 exit; 

@@ -97,6 +97,9 @@ gpu_set_blendmode(bm_normal);
 // ==========================================
 // SDLC SCORING UI
 // ==========================================
+// Only show in gameplay rooms, not on title screen
+if (room == rm_gameMain || room == rm_forest || room == rm_river) {
+
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_font(font_textbox);
@@ -135,6 +138,9 @@ if (global.last_score_change_timer > 0) {
     }
     draw_set_alpha(1.0);
 }
+
+} // end of scoring UI room check
+
 
 // ==========================================
 // INVENTORY DISPLAY (THE NEW CREAM UI)

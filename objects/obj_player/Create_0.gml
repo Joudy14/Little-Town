@@ -28,6 +28,7 @@ myState = playerState.idle;
 nearbyBridge = noone;
 bridgePrompt = noone;
 nearbyChest = noone;
+chestPrompt = noone;
 
 // Player Sprite array [myState][dir]
 // Idle

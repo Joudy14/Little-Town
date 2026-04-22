@@ -1,12 +1,12 @@
 {
   "$GMObject":"",
-  "%Name":"obj_scanner",
+  "%Name":"obj_item08",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_scanner",
+  "name":"obj_item08",
   "overriddenProperties":[
     {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemName","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"\"Scanner\"",},
     {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemWeight","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"1",},

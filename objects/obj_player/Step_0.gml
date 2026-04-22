@@ -141,22 +141,33 @@ if (nearbyItem && !nearbyNPC && (hasItem == noone)) {
 }
 
 // ==========================================
-// 7. ANIMATION STATE OVERRIDES
+// 7. ANIMATION STATE OVERRIDES & INVENTORY ADD
 // ==========================================
 if (myState == playerState.pickingUp) {
     if (image_index >= image_number-1) {
+        show_debug_message("PICKUP ANIMATION FINISHED");
+        if (global.pending_item_name != "") {
+            array_push(global.inventory, global.pending_item_name);
+            array_push(global.inventory_keys, global.pending_item_key);
+            array_push(global.picked_up_items, global.pending_item_key);
+            show_debug_message("Added to inventory: " + global.pending_item_name);
+            show_debug_message("picked_up_items now: " + string(global.picked_up_items));
+            // Clear pending
+            global.pending_item_name = "";
+            global.pending_item_key = "";
+        } else {
+            show_debug_message("No pending item");
+        }
+        // Destroy the world item if it still exists
+        if (hasItem != noone && instance_exists(hasItem)) {
+            with (hasItem) instance_destroy();
+        }
         myState = playerState.carrying;
         global.playerControl = true;
+        hasItem = noone;
     }
 }
 
-if (myState == playerState.puttingDown) {
-    carryLimit = 0;
-    if (image_index >= image_number-1) {
-        myState = playerState.idle;
-        global.playerControl = true;
-    }
-}
 
 // ==========================================
 // 8. FINAL UPDATES
@@ -168,6 +179,19 @@ depth = -y;
 
 // Check for collision with Chest
 nearbyChest = collision_rectangle(x - lookRange, y - lookRange, x + lookRange, y + lookRange, obj_chest, false, true);
+
+
+// Chest prompt
+if (nearbyChest && !nearbyChest.is_open && !nearbyNPC) {
+    if (chestPrompt == noone) {
+        chestPrompt = scr_showPrompt(nearbyChest, nearbyChest.x, nearbyChest.y - 50);
+    }
+} else {
+    if (chestPrompt != noone) {
+        scr_dismissPrompt(chestPrompt, 0);
+        chestPrompt = noone;
+    }
+}
 
 // ==========================================
 // ROOM TRANSITIONS - COMPLETE WITH ALL COORDINATES
@@ -214,6 +238,9 @@ if (room == rm_river) {
 }
 
 
+// Detect bridge
+nearbyBridge = collision_rectangle(x - 50, y - 50, x + 50, y + 50, obj_bridge, false, true);
+
 // Bridge prompt
 if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
     if (bridgePrompt == noone) {
@@ -225,6 +252,3 @@ if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
         bridgePrompt = noone;
     }
 }
-
-nearbyBridge = collision_rectangle(x - 50, y - 50, x + 50, y + 50, obj_bridge, false, true);
-

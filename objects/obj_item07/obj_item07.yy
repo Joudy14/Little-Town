@@ -1,11 +1,11 @@
 {
   "$GMObject":"",
-  "%Name":"pencil",
+  "%Name":"obj_item07",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"pencil",
+  "name":"obj_item07",
   "overriddenProperties":[],
   "parent":{
     "name":"obj",
@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_item_pencil",
-    "path":"sprites/spr_item_pencil/spr_item_pencil.yy",
+    "name":"spr_item_checklist",
+    "path":"sprites/spr_item_checklist/spr_item_checklist.yy",
   },
   "spriteMaskId":null,
   "visible":true,

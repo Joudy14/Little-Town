@@ -3,10 +3,10 @@ npc_state = 0;
 
 // --- ASSETS & TEXT ---
 doneSprite = noone; 
-desired_item = "Apple"; 
+desired_item = "Checklist"; 
 
-myText = "I hate being a teacher. Wait, what are you doing outside?"; 
-itemTextDone = "Finally! Now I can finish grading these papers.";
+myText = "what should i do with all this howswork"; 
+itemTextDone = "Finally! Now I can orgnize my things";
 
 // --- SEQUENCES ---
 seqHappy = seq_teacher_happy;

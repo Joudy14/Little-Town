@@ -3,13 +3,12 @@
   "%Name":"obj_item04",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":1,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
   "name":"obj_item04",
-  "overriddenProperties":[
-    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemName","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"“Weigher”",},
-    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemWeight","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"1.8",},
-  ],
+  "overriddenProperties":[],
   "parent":{
     "name":"obj",
     "path":"folders/Objects/obj.yy",
@@ -36,9 +35,12 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_item04",
-    "path":"sprites/spr_item04/spr_item04.yy",
+    "name":"spr_key",
+    "path":"sprites/spr_key/spr_key.yy",
   },
-  "spriteMaskId":null,
+  "spriteMaskId":{
+    "name":"spr_key",
+    "path":"sprites/spr_key/spr_key.yy",
+  },
   "visible":true,
 }

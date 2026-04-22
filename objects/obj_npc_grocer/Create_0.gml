@@ -3,10 +3,10 @@ npc_state = 0;
 
 // --- ASSETS & TEXT ---
 doneSprite = noone; 
-desired_item = "Scale"; // <--- NOW HE WANTS THE SCALE
+desired_item = "Pencil"; // <--- NOW HE WANTS THE SCALE
 
-myText = "I can't sell my produce without my Scale! Have you found it?"; 
-itemTextDone = "Thank you! Now I can finally measure my goods.";
+myText = "I hate being a teacher. Wait, what are you doing outside?"; 
+itemTextDone = "Finally! Now I can finish grading these papers.";
 
 // --- SEQUENCES ---
 seqHappy = seq_grocer_happy;
