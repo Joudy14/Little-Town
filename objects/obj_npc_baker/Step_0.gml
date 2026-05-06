@@ -97,48 +97,62 @@ if (distance_to_object(obj_player) < 60) {
             }
         }
 
-        // ==========================================
-        // 5. V KEY VALIDATION & SCORE
-        // ==========================================
-        if (keyboard_check_pressed(ord("V")) && npc_state == 7) {
-            if (instance_exists(obj_textbox)) instance_destroy(obj_textbox);
+// ==========================================
+// 5. V KEY VALIDATION & SCORE (with achievements)
+// ==========================================
+if (keyboard_check_pressed(ord("V")) && npc_state == 7) {
+    if (instance_exists(obj_textbox)) instance_destroy(obj_textbox);
 
-            var _targetLayer = "Sequences";
-            if (!layer_exists(_targetLayer)) _targetLayer = "Instances";
-            layer_depth(_targetLayer, -15000);
+    var _targetLayer = "Sequences";
+    if (!layer_exists(_targetLayer)) _targetLayer = "Instances";
+    layer_depth(_targetLayer, -15000);
 
-            var _val1 = string_replace_all(string_lower(string(given_item)), " ", "");
-            var _val2 = string_replace_all(string_lower(string(desired_item)), " ", "");
+    var _val1 = string_replace_all(string_lower(string(given_item)), " ", "");
+    var _val2 = string_replace_all(string_lower(string(desired_item)), " ", "");
 
-            var _inst = instance_create_depth(x, y - 300, -10000, obj_textbox);
+    var _inst = instance_create_depth(x, y - 300, -10000, obj_textbox);
 
-            if (_val1 == _val2) {
-                // SUCCESS
-                global.score += 10; 
-                global.last_score_change = 10;
-                myState = npcState.done; 
-                if (sequenceHappy != noone) layer_sequence_create(_targetLayer, x, y, sequenceHappy);
-                
-                _inst.textToShow = "Yes! This is exactly what I needed!";
-                npc_state = 0; 
-                
-            } else {
-                // FAILURE
-                global.score -= 5;
-                global.last_score_change = -5;
-                myState = npcState.normal;
-                if (sequenceSad != noone) layer_sequence_create(_targetLayer, x, y, sequenceSad);
-                
-                _inst.textToShow = itemTextThanks 
-                npc_state = 6; 
-            }
-            
-            global.last_score_change_timer = 30;
-            global.last_score_x = 100;
-            global.last_score_y = 50;
-        }
+    // --- ACHIEVEMENT TRACKING (Baker) ---
+    global.validated.baker = true;
+    if (!global.first_validation_done) {
+        global.first_validation_done = true;
+        scr_unlock_achievement("validation_master", "Validation Master");
     }
-} else {
+    // ------------------------------------
+
+    if (_val1 == _val2) {
+        global.score += 10;
+        global.last_score_change = 10;
+        myState = npcState.done;
+        if (sequenceHappy != noone) layer_sequence_create(_targetLayer, x, y, sequenceHappy);
+        _inst.textToShow = "Yes! This is exactly what I needed!";
+        npc_state = 0;
+
+        // Also mark correct_given for Problem Solver & Master Analyst
+        global.correct_given.baker = true;
+        if (global.validated.baker && global.validated.teacher && global.validated.grocer &&
+            global.correct_given.baker && global.correct_given.teacher && global.correct_given.grocer) {
+            scr_unlock_achievement("master_analyst", "Master Analyst");
+        }
+        // Problem Solver (all three correct, regardless of validation)
+        if (global.correct_given.baker && global.correct_given.teacher && global.correct_given.grocer) {
+            scr_unlock_achievement("problem_solver");
+        }
+    } else {
+        global.score -= 5;
+        global.last_score_change = -5;
+        myState = npcState.normal;
+        if (sequenceSad != noone) layer_sequence_create(_targetLayer, x, y, sequenceSad);
+        _inst.textToShow = itemTextThanks;
+        npc_state = 6;
+        // For Fixer achievement – track that a wrong item was given
+        global.gave_wrong_before.baker = true;
+    }
+
+    global.last_score_change_timer = 30;
+    global.last_score_x = 100;
+    global.last_score_y = 50;
+} }} else {
     // ==========================================
     // 6. WALK-AWAY RESET
     // ==========================================

@@ -1,79 +1,96 @@
-// --- Keep Appearance & Depth at the top ---
 depth = -y;
 
-// ==========================================
-// UNIFIED INTERACTION LOGIC
-// ==========================================
-if (distance_to_object(obj_player) < 50) {
-    
-    // 1. SPACE BAR: STEP THROUGH DIALOGUE
+
+if (distance_to_object(obj_player) < 90) {
+	
+    // Space bar progression
     if (keyboard_check_pressed(vk_space)) {
-        
-        // Clear old box
         if (instance_exists(obj_textbox)) instance_destroy(obj_textbox);
-
-        var _text = "";
-        
-        if (npc_state == 0)      { _text = myText; npc_state = 1; }
-        else if (npc_state == 1) { _text = "1. Give item   2. Go look"; npc_state = 2; }
-        else if (npc_state == 4) { _text = itemTextDone; npc_state = 5; }
-        else if (npc_state == 5) { npc_state = 4; }
-
-        if (_text != "") {
-            var _inst = instance_create_depth(x, y - 300, -10000, obj_textbox);
-            _inst.textToShow = _text; 
+        if (global.mayor_deployed) {
+            var _msg = instance_create_depth(x, y-300, -10000, obj_textbox);
+            _msg.textToShow = itemTextDone;
+            exit;
+        }
+        switch (mayor_state) {
+            case 0:
+                var _msg = instance_create_depth(x, y-300, -10000, obj_textbox);
+                _msg.textToShow = myText;
+                mayor_state = 1;
+                break;
+            case 1:
+               if (!global.correct_given.baker || !global.correct_given.teacher || !global.correct_given.grocer) {
+                    var _msg = instance_create_depth(x, y-300, -10000, obj_textbox);
+                    _msg.textToShow = "You haven't solved all problems yet. Help the Baker, Teacher, and Grocer first.";
+                    mayor_state = 0;
+                } else {
+                    var _msg = instance_create_depth(x, y-300, -10000, obj_textbox);
+                    _msg.textToShow = "You have helped everyone. Are you ready to deploy?\n\n1. Yes, deploy.\n2. No, let me check again.";
+                    mayor_state = 2;
+                }
+                break;
         }
     }
 
-    // 2. ITEM SELECTION (1 to Open, 2 to Cancel)
-    if (npc_state == 2) {
+    // Number keys for confirmation (1 = yes, 2 = no)
+    if (mayor_state == 2) {
         if (keyboard_check_pressed(ord("1"))) {
             if (instance_exists(obj_textbox)) instance_destroy(obj_textbox);
-            
-            global.inventory_open = true; // FREEZE
-            npc_state = 3; 
-            
-            var _inst = instance_create_depth(x, y - 300, -10000, obj_textbox);
-            _inst.textToShow = "You want to know my opinion? (Press V)";
+            mayor_state = 3;
+            current_question = 0;
+            design_correct = 0;
+            show_next_design_question();  // defined in a script
         }
-        
         if (keyboard_check_pressed(ord("2"))) {
             if (instance_exists(obj_textbox)) instance_destroy(obj_textbox);
-            global.inventory_open = false; // UNFREEZE
-            npc_state = 0; 
+            var _msg = instance_create_depth(x, y-300, -10000, obj_textbox);
+            _msg.textToShow = "Take your time. Come back when you are ready.";
+            mayor_state = 0;
         }
     }
 
-    // 3. V KEY VALIDATION (The "Unfreeze" Zone)
-    if (keyboard_check_pressed(ord("V")) && npc_state == 3) {
-        
-        // --- FORCED UNFREEZE ---
-        global.inventory_open = false; 
-        global.selected_index = 0;
-        
-        if (instance_exists(obj_textbox)) instance_destroy(obj_textbox);
-
-        if (array_length(global.inventory) > 0) {
-            var _selected_item_name = global.inventory[global.selected_index];
-
-            if (_selected_item_name == desired_item) {
-                global.score += 10; 
-                array_delete(global.inventory, global.selected_index, 1);
-                npc_state = 4; 
-                myState = npcState.done; 
-            } else {
-                global.score -= 5;
-                npc_state = 0; 
+    // Answer design questions (1,2,3 keys)
+    if (mayor_state == 3 && global.waiting_for_design_answer) {
+        var _key = -1;
+        if (keyboard_check_pressed(ord("1"))) _key = 1;
+        if (keyboard_check_pressed(ord("2"))) _key = 2;
+        if (keyboard_check_pressed(ord("3"))) _key = 3;
+        if (_key != -1) {
+            global.waiting_for_design_answer = false;
+            if (instance_exists(obj_textbox)) instance_destroy(obj_textbox);
+            var _q = global.design_questions[current_question];
+            if (_key == _q.correct + 1) {
+                design_correct++;
+                scr_add_points(10, x, y-50);
             }
-        } else {
-            npc_state = 0;
+            current_question++;
+            if (current_question < array_length(global.design_questions)) {
+                show_next_design_question();
+            } else {
+                mayor_state = 4;
+                start_build_phase();  // defined in a script
+            }
         }
     }
-} else {
-    // 4. DISTANCE SAFETY (If you walk away somehow)
-    if (npc_state == 3) {
-        global.inventory_open = false;
-        npc_state = 0;
-        if (instance_exists(obj_textbox)) instance_destroy(obj_textbox);
+}
+
+// Build phase progress
+if (mayor_state == 4 && build_progress < global.build_progress_max) {
+    build_progress++;
+    if (build_progress >= global.build_progress_max) {
+        var _success_chance = 0.4 + (design_correct / array_length(global.design_questions)) * 0.6;
+        var _success = random(1) < _success_chance;
+        if (_success) {
+            var _msg = instance_create_depth(x, y-300, -10000, obj_textbox);
+            _msg.textToShow = "Build successful! Your system is ready.";
+            perform_final_evaluation();  // defined in a script
+        } else {
+            var _msg = instance_create_depth(x, y-300, -10000, obj_textbox);
+            _msg.textToShow = "Build failed! The design had flaws. You need to restart the process.";
+            mayor_state = 0;
+            global.mayor_deployed = false;
+            current_question = 0;
+            design_correct = 0;
+            build_progress = 0;
+        }
     }
 }

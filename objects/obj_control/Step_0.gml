@@ -121,3 +121,35 @@ if (global.inventory_open || menuActive || sequenceState == seqState.playing) {
 } else {
     global.playerControl = true;
 }
+
+// ==========================================
+// 6. Mouse click detection for button & popup
+// ==========================================
+
+if (room != rm_mainTitle && mouse_check_button_pressed(mb_left)) {
+
+    var _mx = device_mouse_x_to_gui(0);
+    var _my = device_mouse_y_to_gui(0);
+    
+    // Button area
+    var _btn_w = 200;
+    var _btn_h = 70;
+    var _btn_x = display_get_gui_width() - _btn_w - 50;
+    var _btn_y = 20;
+    
+    // Popup area (if open)
+    var _pop_w = 500;
+    var _pop_h = 400;
+    var _pop_x = (display_get_gui_width() - _pop_w) / 2;
+    var _pop_y = (display_get_gui_height() - _pop_h) / 2;
+    
+    if (_mx >= _btn_x && _mx <= _btn_x + _btn_w && _my >= _btn_y && _my <= _btn_y + _btn_h) {
+        // Toggle popup
+        global.show_achievement_popup = !global.show_achievement_popup;
+    } else if (global.show_achievement_popup) {
+        // If click outside popup, close it
+        if (!(_mx >= _pop_x && _mx <= _pop_x + _pop_w && _my >= _pop_y && _my <= _pop_y + _pop_h)) {
+            global.show_achievement_popup = false;
+        }
+    }
+}

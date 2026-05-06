@@ -39,25 +39,32 @@ if (global.playerControl == true) {
             show_debug_message("=== CHEST INTERACTION ===");
             show_debug_message("global.inventory_keys: " + string(global.inventory_keys));
             
-if (_has_key) {
-    // Remove key, open chest, play sound (as before)
-    array_delete(global.inventory, _key_index, 1);
-    array_delete(global.inventory_keys, _key_index, 1);
-    nearbyChest.is_open = true;
-    audio_play_sound(snd_pop01, 1, 0);
-    
-    // Show success message (but do NOT spawn reward yet)
-    var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
-    _msg.textToShow = "You unlocked the chest! A reward appears!";
-    
-    // Store reward position and item for later
-    global.pending_reward_x = nearbyChest.x;
-    global.pending_reward_y = nearbyChest.y - 90;  // adjust as needed
-    global.pending_reward_item = obj_item03;       // or whatever reward object
-    
-    // Mark that chest reward has been queued (so we don't queue again)
-    nearbyChest.reward_spawned = true;   // prevent double spawning
-} else {
+            if (_has_key) {
+                // Remove key, open chest, play sound (as before)
+                array_delete(global.inventory, _key_index, 1);
+                array_delete(global.inventory_keys, _key_index, 1);
+                nearbyChest.is_open = true;
+                audio_play_sound(snd_pop01, 1, 0);
+                
+                // --- ADD: Unlock Treasure Hunter achievement (if not already) ---
+                if (!global.chest_opened) {
+                    global.chest_opened = true;
+                    scr_unlock_achievement("treasure_hunter");
+                }
+                // ------------------------------------------------------------
+                
+                // Show success message (but do NOT spawn reward yet)
+                var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+                _msg.textToShow = "You unlocked the chest! A reward appears!";
+                
+                // Store reward position and item for later
+                global.pending_reward_x = nearbyChest.x;
+                global.pending_reward_y = nearbyChest.y - 90;
+                global.pending_reward_item = obj_item03;
+                
+                // Mark that chest reward has been queued (so we don't queue again)
+                nearbyChest.reward_spawned = true;
+            } else {
                 // No key message
                 var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
                 _msg.textToShow = "This chest is locked. You need a KEY to open it.";
@@ -72,49 +79,56 @@ if (_has_key) {
         exit; // Stop here
     }
     
-// ==========================================
-// BUILD BRIDGE
-// ==========================================
-if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
-    
-    // Check by item name instead of key
-    var _has_wood = false;
-    var _wood_index = -1;
-    for (var i = 0; i < array_length(global.inventory); i++) {
-        if (global.inventory[i] == "Wood") {
-            _has_wood = true;
-            _wood_index = i;
-            break;
-        }
-    }
-    
-    if (_has_wood) {
-        // Remove wood from inventory
-        array_delete(global.inventory, _wood_index, 1);
-        array_delete(global.inventory_keys, _wood_index, 1);
+    // ==========================================
+    // BUILD BRIDGE
+    // ==========================================
+    if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
         
-        // Build bridge
-        nearbyBridge.is_built = true;
-        nearbyBridge.visible = true;
-        
-        // Destroy river blocks
-        with (obj_river_block_2) {
-            if (distance_to_point(other.nearbyBridge.x, other.nearbyBridge.y) < 100) {
-                instance_destroy();
+        // Check by item name instead of key
+        var _has_wood = false;
+        var _wood_index = -1;
+        for (var i = 0; i < array_length(global.inventory); i++) {
+            if (global.inventory[i] == "Wood") {
+                _has_wood = true;
+                _wood_index = i;
+                break;
             }
         }
         
-        audio_play_sound(snd_pop01, 1, 0);
-        var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
-        _msg.textToShow = "You built a bridge! Now you can cross the river.";
+        if (_has_wood) {
+            // Remove wood from inventory
+            array_delete(global.inventory, _wood_index, 1);
+            array_delete(global.inventory_keys, _wood_index, 1);
+            
+            // Build bridge
+            nearbyBridge.is_built = true;
+            nearbyBridge.visible = true;
+            
+            // --- ADD: Unlock Engineer achievement ---
+            if (!global.bridge_built) {
+                global.bridge_built = true;
+                scr_unlock_achievement("engineer");
+            }
+            // --------------------------------------
+            
+            // Destroy river blocks
+            with (obj_river_block_2) {
+                if (distance_to_point(other.nearbyBridge.x, other.nearbyBridge.y) < 100) {
+                    instance_destroy();
+                }
+            }
+            
+            audio_play_sound(snd_pop01, 1, 0);
+            var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+            _msg.textToShow = "You built a bridge! Now you can cross the river.";
+            
+        } else {
+            var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
+            _msg.textToShow = "The river is too wide. You need WOOD to build a bridge.";
+        }
         
-    } else {
-        var _msg = instance_create_depth(x, y - 100, -10000, obj_textbox);
-        _msg.textToShow = "The river is too wide. You need WOOD to build a bridge.";
+        exit;
     }
-    
-    exit;
-}
     
     // ==========================================
     // PRIORITY 1: TALK TO NPC
@@ -133,6 +147,15 @@ if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
                     iii = instance_create_depth(nearbyNPC.x,nearbyNPC.y-400,-10000,obj_textbox);
                     iii.textToShow = _text;
                 }
+                
+                // --- ADD: Track talking to each NPC for Networker achievement ---
+                if (nearbyNPC.object_index == obj_npc_baker) global.talked_to.baker = true;
+                if (nearbyNPC.object_index == obj_npc_teacher) global.talked_to.teacher = true;
+                if (nearbyNPC.object_index == obj_npc_grocer) global.talked_to.grocer = true;
+                if (global.talked_to.baker && global.talked_to.teacher && global.talked_to.grocer) {
+                    scr_unlock_achievement("networker");
+                }
+                // -----------------------------------------------------------------
             }
             
             // Case B: Player HAS an item - give it to NPC
@@ -147,23 +170,47 @@ if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
                     // Add +20 points
                     scr_add_points(20, x, y - 50);
                     
-                    // Mark which NPC got correct item (USING OLD NAMES FOR LOCAL TEST)
-                    if (nearbyNPC.object_index == obj_npc_teacher) global.mother_correct = true; // Old name for Mother
-                    if (nearbyNPC.object_index == obj_npc_grocer) global.teacher_correct = true;  // Old name for Teacher
-                    if (nearbyNPC.object_index == obj_npc_baker) global.baker_correct = true;     // Stays the same
-                    // -----------------------------------------------------
+                    // Mark which NPC got correct item
+                    var _npc_idx = -1;
+                    if (nearbyNPC.object_index == obj_npc_baker) {
+                        global.correct_given.baker = true;
+                        _npc_idx = 0;
+                    }
+                    if (nearbyNPC.object_index == obj_npc_teacher) {
+                        global.correct_given.teacher = true;
+                        _npc_idx = 1;
+                    }
+                    if (nearbyNPC.object_index == obj_npc_grocer) {
+                        global.correct_given.grocer = true;
+                        _npc_idx = 2;
+                    }
+                    
+                    // Check Problem Solver achievement (all three correct)
+                    if (global.correct_given.baker && global.correct_given.teacher && global.correct_given.grocer) {
+                        scr_unlock_achievement("problem_solver");
+                    }
+                    
+                    // Fixer achievement: if this NPC previously received a wrong item and now gets correct
+                    if ((nearbyNPC.object_index == obj_npc_baker && global.gave_wrong_before.baker) ||
+                        (nearbyNPC.object_index == obj_npc_teacher && global.gave_wrong_before.teacher) ||
+                        (nearbyNPC.object_index == obj_npc_grocer && global.gave_wrong_before.grocer)) {
+                        if (!global.fixer_done) {
+                            global.fixer_done = true;
+                            scr_unlock_achievement("fixer");
+                        }
+                    }
+                    // ----------------------------------------------------------------
                     
                     _text = nearbyNPC.itemTextHappy;
                     _seq = nearbyNPC.sequenceHappy;
                     
-                    // --- ADD: Update global NPC state (has correct item, not validated yet) ---
+                    // Update global NPC state (has correct item, not validated yet)
                     var _npc_obj = nearbyNPC.object_index;
                     if (global.npc_states[$ _npc_obj] == undefined) {
                         global.npc_states[$ _npc_obj] = { done: false, has_item: false, gave_wrong: false, validated: false };
                     }
                     global.npc_states[$ _npc_obj].has_item = true;
                     global.npc_states[$ _npc_obj].gave_wrong = false;
-                    // ------------------------------------------------------------------------
                     
                     // Destroy the item
                     with (hasItem) {
@@ -189,19 +236,23 @@ if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
                     // Subtract 20 points
                     scr_add_points(-20, x, y - 50);
                     global.wrong_items_given += 1;
+                    
+                    // Track wrong item for Fixer achievement
+                    if (nearbyNPC.object_index == obj_npc_baker) global.gave_wrong_before.baker = true;
+                    if (nearbyNPC.object_index == obj_npc_teacher) global.gave_wrong_before.teacher = true;
+                    if (nearbyNPC.object_index == obj_npc_grocer) global.gave_wrong_before.grocer = true;
                     // ---------------------------------------------------
                     
                     _text = nearbyNPC.itemTextSad;
                     _seq = nearbyNPC.sequenceSad;
                     
-                    // --- ADD: Update global NPC state (has wrong item) ---
+                    // Update global NPC state (has wrong item)
                     var _npc_obj = nearbyNPC.object_index;
                     if (global.npc_states[$ _npc_obj] == undefined) {
                         global.npc_states[$ _npc_obj] = { done: false, has_item: false, gave_wrong: false, validated: false };
                     }
                     global.npc_states[$ _npc_obj].has_item = true;
                     global.npc_states[$ _npc_obj].gave_wrong = true;
-                    // -----------------------------------------------------
                     
                     // Create textbox with sequence
                     if (!instance_exists(obj_textbox)) {
@@ -261,9 +312,9 @@ if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
         myState = playerState.pickingUp;
         image_index = 0;
         hasItem = nearbyItem;
-		global.pending_item_name = hasItem.itemName;
-global.pending_item_key = hasItem.item_key;
-show_debug_message("Stored pending item: name=" + global.pending_item_name + " key=" + global.pending_item_key);
+        global.pending_item_name = hasItem.itemName;
+        global.pending_item_key = hasItem.item_key;
+        show_debug_message("Stored pending item: name=" + global.pending_item_name + " key=" + global.pending_item_key);
         carryLimit = hasItem.itemWeight * 0.1;
         with (hasItem) {
             myState = itemState.taken;

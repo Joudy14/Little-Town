@@ -152,6 +152,15 @@ if (myState == playerState.pickingUp) {
             array_push(global.picked_up_items, global.pending_item_key);
             show_debug_message("Added to inventory: " + global.pending_item_name);
             show_debug_message("picked_up_items now: " + string(global.picked_up_items));
+			
+			            // --- ADD COLLECTOR ACHIEVEMENT CHECK ---
+            if (!array_contains(global.items_collected, global.pending_item_key)) {
+                array_push(global.items_collected, global.pending_item_key);
+                if (array_length(global.items_collected) >= 6) {
+                    scr_unlock_achievement("collector");
+                }
+            }
+			
             // Clear pending
             global.pending_item_name = "";
             global.pending_item_key = "";
@@ -204,48 +213,15 @@ if (global.pending_reward_x != noone && !instance_exists(obj_textbox)) {
     global.pending_reward_item = noone;
 }
 
-// ==========================================
-// ROOM TRANSITIONS - COMPLETE WITH ALL COORDINATES
-// ==========================================
+// River area message (position‑based)
+var _river_x = 6840;
+var _river_y = 1727;
+var _radius = 200;  // pixels around the point
 
-// --- MAIN ROOM (rm_gameMain) ---
-if (room == rm_gameMain) {
-    
-    // DOWN to FOREST
-    if (x > 2934 && x < 3034 && y > 2924 && y < 3024) {
-        room_goto(rm_forest);
-        x = 1792;
-        y = 200;
-    }
-    
-    // RIGHT to RIVER
-    if (x > 4901 && x < 5001 && y > 1351 && y < 1451) {
-        room_goto(rm_river);
-        x = 227;
-        y = 998;
-    }
-}
-
-// --- FOREST ROOM (rm_forest) ---
-if (room == rm_forest) {
-    
-    // UP to MAIN
-    if (x > 1743 && x < 1843 && y > 26 && y < 126) {
-        room_goto(rm_gameMain);
-        x = 2995;
-        y = 2900;
-    }
-}
-
-// --- RIVER ROOM (rm_river) ---
-if (room == rm_river) {
-    
-    // LEFT to MAIN (using your new exit point)
-    if (x > 43 && x < 143 && y > 967 && y < 1067) {
-        room_goto(rm_gameMain);
-        x = 4900;    // Just left of main exit (4951 - 51)
-        y = 1401;    // Same Y as main exit
-    }
+if (!global.river_message_shown_near && point_distance(x, y, _river_x, _river_y) < _radius) {
+    global.river_message_shown_near = true;
+    var _msg = instance_create_depth(x, y - 80, -10000, obj_textbox);
+    _msg.textToShow = "To cross the river, you need to build a bridge.";
 }
 
 

@@ -10,17 +10,10 @@ switch (event_data[? "message"]) {
     }
     break;
     
-    case "sequenceEnd":
-    {
-        sequenceState = seqState.finished;
-        show_debug_message("Sequence " + string(curSeq) + " has ended");
-    }
-    break;
-    
     case "showGameOverMenu":  // ← ADD THIS CASE
     {
         show_debug_message("Showing Game Over Menu");
-        menuActive = true;
+
         global.playerControl = false;
 		alarm[2] = 30;
     }
