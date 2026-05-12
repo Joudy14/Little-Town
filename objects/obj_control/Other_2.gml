@@ -22,6 +22,7 @@ enum playerState {
     carrying,
     carryIdle,
     puttingDown,
+	
 }
 
 // Item states
