@@ -143,9 +143,15 @@ global.design_questions = [
       options: ["A) Requirements document", "B) Working software/system", "C) Test plan"], 
       correct: 1 }
 ];
-global.build_progress_max = 60;
+global.build_progress_max = 300;
 global.waiting_for_design_answer = false;
 global.mayor_deployed = false;
+
+global.stakeholder_received_item = {
+    baker: false,
+    teacher: false,
+    grocer: false
+};
 
 global.talked_to = { baker: false, teacher: false, grocer: false };
 global.correct_given = { baker: false, teacher: false, grocer: false };

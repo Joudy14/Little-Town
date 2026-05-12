@@ -35,8 +35,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_item01",
-    "path":"sprites/spr_item01/spr_item01.yy",
+    "name":"spr_item_checklist",
+    "path":"sprites/spr_item_checklist/spr_item_checklist.yy",
   },
   "spriteMaskId":null,
   "visible":true,

@@ -1,5 +1,16 @@
 // @description Main Step Logic
 
+// DEBUG: Check movement blockers
+if (keyboard_check_pressed(ord("D"))) { // Press D to check manually
+    show_debug_message("--- Movement Check ---");
+    show_debug_message("global.playerControl = " + string(global.playerControl));
+    show_debug_message("global.inventory_open = " + string(global.inventory_open));
+    show_debug_message("obj_control.menuActive = " + string(obj_control.menuActive));
+    show_debug_message("global.waiting_for_item_selection = " + string(global.waiting_for_item_selection));
+    show_debug_message("global.show_inventory = " + string(global.show_inventory));
+    show_debug_message("instance_exists(obj_textbox) = " + string(instance_exists(obj_textbox)));
+    show_debug_message("obj_control.sequenceState = " + string(obj_control.sequenceState));
+}
 // ==========================================
 // 1. MOVEMENT INPUT (With Inventory Gate)
 // ==========================================
@@ -17,6 +28,18 @@ if (global.playerControl == true && global.inventory_open == false && obj_contro
     moveLeft = 0;
     moveDown = 0;
     running = false;
+}
+
+// DEBUG: Press D to check movement blockers
+if (keyboard_check_pressed(ord("D"))) {
+    show_debug_message("=== MOVEMENT BLOCKERS ===");
+    show_debug_message("global.playerControl = " + string(global.playerControl));
+    show_debug_message("global.inventory_open = " + string(global.inventory_open));
+    show_debug_message("obj_control.menuActive = " + string(obj_control.menuActive));
+    show_debug_message("global.waiting_for_item_selection = " + string(global.waiting_for_item_selection));
+    show_debug_message("global.show_inventory = " + string(global.show_inventory));
+    show_debug_message("instance_exists(obj_textbox) = " + string(instance_exists(obj_textbox)));
+    show_debug_message("obj_control.sequenceState = " + string(obj_control.sequenceState));
 }
 
 // ==========================================
@@ -237,5 +260,29 @@ if (nearbyBridge && !nearbyBridge.is_built && !nearbyNPC) {
     if (bridgePrompt != noone) {
         scr_dismissPrompt(bridgePrompt, 0);
         bridgePrompt = noone;
+    }
+}
+
+// DEBUG: Press F1 to print movement blocker status
+if (keyboard_check_pressed(vk_f1)) {
+    show_debug_message("=== MOVEMENT BLOCKER STATUS ===");
+    show_debug_message("global.playerControl = " + string(global.playerControl));
+    show_debug_message("global.inventory_open = " + string(global.inventory_open));
+    show_debug_message("obj_control.menuActive = " + string(obj_control.menuActive));
+    show_debug_message("global.waiting_for_item_selection = " + string(global.waiting_for_item_selection));
+    show_debug_message("global.show_inventory = " + string(global.show_inventory));
+    show_debug_message("instance_exists(obj_textbox) = " + string(instance_exists(obj_textbox)));
+    show_debug_message("obj_control.sequenceState = " + string(obj_control.sequenceState));
+}
+
+// Emergency restore – force correct movement flags when idle, but leave inventory state alone
+if (obj_control.sequenceState == seqState.notPlaying && !instance_exists(obj_textbox)) {
+    if (global.playerControl == false || obj_control.menuActive == true) {
+        global.playerControl = true;
+        obj_control.menuActive = false;
+        global.waiting_for_item_selection = false;
+        global.show_inventory = false;
+        // DO NOT reset global.inventory_open – let Q key control it
+        show_debug_message("Emergency movement restore triggered (preserving inventory state)");
     }
 }

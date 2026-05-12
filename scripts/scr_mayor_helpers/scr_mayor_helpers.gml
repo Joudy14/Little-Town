@@ -14,20 +14,26 @@ function show_next_design_question() {
 }
 
 function start_build_phase() {
+	global.build_progress_max = 300;   // 5 seconds at 60 FPS
     build_progress = 0;
     var _msg = instance_create_depth(obj_npc_mayor.x, obj_npc_mayor.y-300, -10000, obj_textbox);
     _msg.textToShow = "Build phase started. Building your system...";
+	
 }
 
 function perform_final_evaluation() {
-    var _base = 100;
-    var _item_bonus = (global.correct_given.baker?20:0) + (global.correct_given.teacher?20:0) + (global.correct_given.grocer?20:0);
-    var _validation_bonus = (global.validated.baker?10:0) + (global.validated.teacher?10:0) + (global.validated.grocer?10:0);
-    var _design_bonus = design_correct * 10;
-    var _wrong_penalty = (global.wrong_items_given || 0) * 20;
-    var _final = _base + _item_bonus + _validation_bonus + _design_bonus - _wrong_penalty;
-    if (_final < 0) _final = 0;
-    global.score = _final;
+var _base = 100;
+var _correct_bonus = (global.correct_given.baker?20:0) + (global.correct_given.teacher?20:0) + (global.correct_given.grocer?20:0);
+var _validation_bonus = (global.validated.baker?10:0) + (global.validated.teacher?10:0) + (global.validated.grocer?10:0);
+var _achievement_points = 0;
+for (var i = 0; i < array_length(global.achievements); i++) {
+    if (global.achievements[i].unlocked) {
+        _achievement_points += global.achievements[i].hidden ? 2 : 1;
+    }
+}
+var _final = _base + _correct_bonus + _validation_bonus + _achievement_points;
+if (_final < 0) _final = 0;
+global.score = _final;
 
     var _rating = "";
     if (_final >= 90) _rating = "EXCELLENT !!";

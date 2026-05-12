@@ -1,3 +1,5 @@
+show_debug_message("Draw GUI: inventory_open = " + string(global.inventory_open));
+
 // ==========================================
 // INITIALIZATION & SETUP
 // ==========================================
@@ -349,6 +351,8 @@ draw_set_valign(fa_top);
 // ACHIEVEMENT POPUP (same style as inventory)
 // ==========================================
 if (global.show_achievement_popup) {
+	draw_set_color(c_red);
+draw_text(_centerX, _centerY, "INVENTORY OPEN DEBUG");
     var _pw = 1000;
     var _ph = 800;
     var _px = (display_get_gui_width() - _pw) / 2;

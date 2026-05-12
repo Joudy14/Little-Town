@@ -6,10 +6,7 @@
   ],
   "managed":true,
   "name":"obj_item02",
-  "overriddenProperties":[
-    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemName","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"“Grass”",},
-    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_par_item","path":"objects/obj_par_item/obj_par_item.yy",},"propertyId":{"name":"itemWeight","path":"objects/obj_par_item/obj_par_item.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"2.5",},
-  ],
+  "overriddenProperties":[],
   "parent":{
     "name":"obj",
     "path":"folders/Objects/obj.yy",
@@ -36,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_item03",
-    "path":"sprites/spr_item03/spr_item03.yy",
+    "name":"scanner",
+    "path":"sprites/scanner/scanner.yy",
   },
   "spriteMaskId":null,
   "visible":true,

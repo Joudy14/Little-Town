@@ -1,3 +1,5 @@
+if (keyboard_check_pressed(ord("A"))) exit;
+
 // ==========================================
 // 1. GAME OVER MENU LOGIC
 // ==========================================
@@ -152,4 +154,12 @@ if (room != rm_mainTitle && mouse_check_button_pressed(mb_left)) {
             global.show_achievement_popup = false;
         }
     }
+}
+
+if (sequenceState == seqState.finished) {
+    if (layer_sequence_exists(curSeqLayer, curSeq)) {
+        layer_sequence_destroy(curSeq);
+    }
+    sequenceState = seqState.notPlaying;
+    show_debug_message("Step: sequenceState set to notPlaying");
 }

@@ -99,6 +99,7 @@ depth = -y;
                 var _inst = instance_create_depth(x, y - 300, -10000, obj_textbox);
                 _inst.textToShow = "Thank you.";
                 
+				global.stakeholder_received_item.teacher = true;
                 npc_state = 7; 
                 exit; 
             }

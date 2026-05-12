@@ -92,6 +92,7 @@ if (distance_to_object(obj_player) < 60) {
                 var _inst = instance_create_depth(x, y - 300, -10000, obj_textbox);
                 _inst.textToShow = itemTextThanks;
                 
+				global.stakeholder_received_item.grocer = true;
                 npc_state = 7; 
                 exit; 
             }

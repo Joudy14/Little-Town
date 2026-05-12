@@ -9,6 +9,19 @@ switch (event_data[? "message"]) {
         }
     }
     break;
+	case "sequenceEnd":
+    global.playerControl = true;
+    global.inventory_open = false;
+    global.waiting_for_item_selection = false;
+    global.show_inventory = false;
+    menuActive = false;           // direct instance variable
+    show_debug_message("sequenceEnd received - movement restored");
+   if (layer_sequence_exists(curSeqLayer, curSeq)) {
+    layer_sequence_destroy(curSeq);
+}
+sequenceState = seqState.notPlaying;
+   
+   break;
     
     case "showGameOverMenu":  // ← ADD THIS CASE
     {
